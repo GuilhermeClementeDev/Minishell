@@ -1,0 +1,25 @@
+name: Norminette Check
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  norminette:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Instalar a Norminette
+        run: |
+          python3 -m pip install --upgrade pip
+          pip3 install norminette
+
+      - name: Rodar a Norminette com flags
+        run: |
+          norminette -R CheckForbiddenSourceHeader **/*.c **/*.h
+
