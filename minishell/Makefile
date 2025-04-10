@@ -1,36 +1,43 @@
-# -*- MakeFile -*-
-
 NAME = minishell
 
 CC = cc
-
 CFLAGS = -Wall -Wextra -Werror
 
-LIBFT = ./lib/libft.a
+SRC_DIR = src
+OBJ_DIR = obj
+LIB_DIR = lib
 
-LIB_PATH = ./lib
+LIBFT = $(LIB_DIR)/libft.a
 
-MY_SOURCES = main.c
+SRCS = \
+		$(SRC_DIR)/main.c \
 
-OBJS = $(MY_SOURCES:.c=.o)
+VASCAO = \
+		$(OBJ_DIR)/main.o \
+
+OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT) $(MLX_LIB)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+$(NAME): $(OBJ_DIR) $(OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) $(VASCAO) $(LIBFT) -o $(NAME)
+
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
 
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@
+	@mv $(OBJS) $(OBJ_DIR)/
 
 $(LIBFT):
-	@make -C $(LIB_PATH)
+	@make -C $(LIB_DIR)
 
 clean:
-	@make -C $(LIB_PATH) clean
-	@rm -f $(OBJS)
+	@make -C $(LIB_DIR) clean
+	@rm -rf $(OBJ_DIR)
 
 fclean: clean
+	@make -C $(LIB_DIR) fclean
 	@rm -f $(NAME)
-	@make -C $(LIB_PATH) fclean
 
 re: fclean all
