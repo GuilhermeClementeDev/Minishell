@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
+/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:36 by guclemen          #+#    #+#             */
-/*   Updated: 2025/04/11 12:10:13 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/04/18 19:11:15 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,18 @@ int	main(int argc, char **argv, char **envp)
 		input = readline("minishell> ");
 		if (!input)
 			break ;
+		//função que verifica se a string é vazia ou só tem espaços
+		if (!ft_not_only_spaces(input))
+		{
+			free(input);
+			continue ;
+		}
+		//função que verifica se a string tem aspas não fechadas
+		if(check_syntax_error(input))
+		{
+			free(input);
+			break ;
+		}
 		if (should_add_to_history(input))
 			add_history(input);
 		printf("%s\n", input);

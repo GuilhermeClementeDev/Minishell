@@ -11,6 +11,8 @@ LIBFT = $(LIB_DIR)/libft.a
 SRCS = \
 	$(SRC_DIR)/main.c \
 	$(SRC_DIR)/utilits.c \
+	$(SRC_DIR)/verify_input.c \
+	$(SRC_DIR)/verify_input_utils.c \
 
 OBJS = $(SRCS:.c=.o)
 
