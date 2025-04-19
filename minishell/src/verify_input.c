@@ -43,10 +43,12 @@ int	verify_redirects(const char *str)
 		{
 			if (str[i+1] == str[i])
 				i++;
-			if (str[i+1] == '\0' || is_delimiter(str[i+1]))
-				return (1);  // Erro: Redirecionamento sem arquivo ou argumento
-			if ((str[i + 1] == '>' || str[i + 1] == '<')) //is_delimiter(str[i + 2])
-				return (1); // Erro: Redirecionamento seguido de outro redirecionamento
+			if (!next_is_valid(str, i + 1))
+				return (1);  // Erro: Redirecionamento sem arquivo ou redirecionamento inválido
+			//if (str[i+1] == '\0')
+			//	return (1);  // Erro: Redirecionamento sem arquivo ou argumento
+			//if ((str[i + 1] == '>' || str[i + 1] == '<')) //is_delimiter(str[i + 2]) //criar um funçãoq que procurar os elementos caso esteja entre espaços
+			//	return (1); // Erro: Redirecionamento seguido de outro redirecionamento
 		}
 		i++;
 	}

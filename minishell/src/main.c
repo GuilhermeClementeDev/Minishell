@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:36 by guclemen          #+#    #+#             */
-/*   Updated: 2025/04/18 19:11:15 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/04/19 15:44:45 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	main(int argc, char **argv, char **envp)
 	while (TRUE)
 	{
 		input = readline("minishell> ");
+		//input = "texte >  > outro_teste";
 		if (!input)
 			break ;
 		//função que verifica se a string é vazia ou só tem espaços
