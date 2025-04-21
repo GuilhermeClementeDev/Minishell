@@ -11,6 +11,7 @@ LIBFT = $(LIB_DIR)/libft.a
 SRCS = \
 	$(SRC_DIR)/main.c \
 	$(SRC_DIR)/utilits.c \
+	$(SRC_DIR)/builtins.c \
 
 OBJS = $(SRCS:.c=.o)
 
