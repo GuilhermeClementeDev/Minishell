@@ -6,7 +6,7 @@
 /*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:36 by guclemen          #+#    #+#             */
-/*   Updated: 2025/04/27 11:24:47 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/04/27 12:40:36 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	main(int argc, char **argv, char **envp)
 	while (TRUE)
 	{
 		input = readline("minishell> ");
+		//input = "texte >  > outro_teste";
 		if (!input)
 			break ;
 		//função que verifica se a string é vazia ou só tem espaços
