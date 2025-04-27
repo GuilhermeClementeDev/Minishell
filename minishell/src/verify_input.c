@@ -37,36 +37,59 @@ int	verify_redirects(const char *str)
 		if (inside_quotes(str, i))
 		{
 			i++;
-			continue;  // Se dentro de aspas, ignora o redirecionamento
+			continue;
 		}
 		if (str[i] == '>' || str[i] == '<')
 		{
-			if (str[i+1] == str[i])
+			if (str[i + 1] == str[i])
 				i++;
-			if (str[i+1] == '\0' || is_delimiter(str[i+1]))
-				return (1);  // Erro: Redirecionamento sem arquivo ou argumento
-			if ((str[i + 1] == '>' || str[i + 1] == '<')) //is_delimiter(str[i + 2])
-				return (1); // Erro: Redirecionamento seguido de outro redirecionamento
+			i++;
+			while (str[i] && is_delimiter(str[i]))
+				i++;
+			if (!str[i] || str[i] == '>' || str[i] == '<' || str[i] == '|')
+				return (1); // Erro: sem arquivo depois do redirecionamento
+		}
+		else
+			i++;
+	}
+	return (0);
+}
+
+int	verify_double_tokens(const char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!inside_quotes(str, i))
+		{
+			if (is_double_operator(str, i))
+				return (1);
+			if (is_pipe_space_pipe(str, &i))
+				return (1);
 		}
 		i++;
 	}
-	return 0;  // Tudo certo com os redirecionamentos
+	return (0);
 }
+
 
 
 int check_syntax_error(const char *str)
 {
-	if (verify_quotes(str))  // Chama a função de verificação
+	if (verify_quotes(str))
 	{
 		ft_putstr_fd("Syntax error: unclosed quotes\n",2);
 		return (1);
 	}
-	if (verify_redirects(str))  // Chama a função de verificação
+	if (verify_redirects(str))
 	{
 		ft_putstr_fd("Syntax error: invalid redirection\n",2);
 		return (1);
 	}
-	//tratar posteriormente
+	if (verify_double_tokens(str))
+		return (1);
 	if (ft_strchr(str, '|') && str[0] == '|')
 	{
 		ft_putstr_fd("Syntax error: unexpected token '|'\n",2);
@@ -79,3 +102,4 @@ int check_syntax_error(const char *str)
 	}
 	return (0);
 }
+

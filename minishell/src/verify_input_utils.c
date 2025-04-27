@@ -29,3 +29,35 @@ int	is_delimiter(char c)
 		return (1);
 	return (0);
 }
+
+int	is_double_operator(const char *str, int i)
+{
+	if (str[i] == '|' && str[i + 1] == '|')
+	{
+		ft_putstr_fd("Syntax error: unexpected token '|'\n", 2);
+		return (1);
+	}
+	if (str[i] == '&' && str[i + 1] == '&')
+	{
+		ft_putstr_fd("Syntax error: unexpected token '&'\n", 2);
+		return (1);
+	}
+	return (0);
+}
+
+int	is_pipe_space_pipe(const char *str, int *i)
+{
+	if (str[*i] == '|' && is_delimiter(str[*i + 1]))
+	{
+		(*i)++;
+		while (is_delimiter(str[*i]))
+			(*i)++;
+		if (str[*i] == '|')
+		{
+			ft_putstr_fd("Syntax error: unexpected token '|'\n", 2);
+			return (1);
+		}
+		(*i)--;
+	}
+	return (0);
+}
