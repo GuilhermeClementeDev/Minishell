@@ -74,9 +74,30 @@ int	verify_double_tokens(const char *str)
 	return (0);
 }
 
+int	verify_tokens(const char *str)
+{
+	if (ft_strchr(str, '|') && str[0] == '|')
+	{
+		ft_putstr_fd("Syntax error: unexpected token '|'\n",2);
+		return (1);
+	}
+	if (ft_strchr(str, '|') && str[ft_strlen(str) - 1] == '|')
+	{
+		ft_putstr_fd("Syntax error: unexpected token '|'\n",2);
+		return (1);
+	}
+	if (ft_strchr(str, '&') && str[0] == '&')
+	{
+		ft_putstr_fd("Syntax error: unexpected token '&'\n",2);
+		return (1);
+	}
+	//não sei se devo verificar se o & ta no final
+	return (0);
+}
 
 
-int check_syntax_error(const char *str)
+
+int	check_syntax_error(const char *str)
 {
 	if (verify_quotes(str))
 	{
@@ -90,16 +111,9 @@ int check_syntax_error(const char *str)
 	}
 	if (verify_double_tokens(str))
 		return (1);
-	if (ft_strchr(str, '|') && str[0] == '|')
-	{
-		ft_putstr_fd("Syntax error: unexpected token '|'\n",2);
+		//devo verificar se o & ta no inicio ou no final??
+	if (verify_tokens(str))
 		return (1);
-	}
-	if (ft_strchr(str, '|') && str[ft_strlen(str) - 1] == '|')
-	{
-		ft_putstr_fd("Syntax error: unexpected token '|'\n",2);
-		return (1);
-	}
 	return (0);
 }
 
