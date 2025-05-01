@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 16:56:02 by guclemen          #+#    #+#             */
-/*   Updated: 2025/04/21 17:41:09 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/01 14:59:05 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,49 @@ void	ft_echo(char **str)
 	if (!flag)
 		printf("\n");
 }
-/* //testes das funções na mão
+
+void	ft_pwd(void)
+{
+	char	cwd[PATH_MAX];
+
+	if (getcwd(cwd, sizeof(cwd)))
+		printf("%s\n", cwd);
+	else
+		ft_error("Unable to get pwd", 1);
+}
+
+void	ft_env(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		printf("%s\n", envp[i]);
+		i++;
+	}
+}
+
+void	ft_cd(char **str, char **envp)
+{
+	const char	*path;
+
+	if (str[1])
+		path = str[1];
+	else
+		path = get_env_value(envp, "HOME");
+	if (path)
+	{
+		if (chdir(path) != 0)
+		{
+			ft_putstr_fd ("-Minishell: cd: ", 2);
+			ft_putstr_fd ((char *)path, 2);
+			ft_putstr_fd (": No such file or directory\n", 2);
+		}
+	}
+}
+
+/* //echo
 int main(void)
 {
 	// Testes ft_echo
@@ -53,3 +95,37 @@ int main(void)
 	return 0;
 }
 */
+
+/* pwd
+int main()
+{
+	ft_pwd();
+}
+*/
+
+/* ft_env
+int main(int argc, char **argv, char **envp)
+{
+	// Testa a função ft_env com o envp passado pelo sistema
+	(void)argc;
+	(void)argv;
+	ft_env(envp);
+
+	return 0;
+}
+*/
+/* // cd
+int main(int argc, char **argv, char **envp)
+{
+    if (argc > 1)
+        ft_cd(argv, envp);
+    else
+    {
+        char *no_args[] = { "cd", NULL };
+        ft_cd(no_args, envp);
+    }
+
+    // Agora imprime o diretório atual para você conferir
+	ft_pwd();
+    return 0;
+}*/

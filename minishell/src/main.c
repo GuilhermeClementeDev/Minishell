@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
 static int	should_add_to_history(char *str)
 {
 	if (!str || !*str)
@@ -41,3 +41,4 @@ int	main(int argc, char **argv, char **envp)
 	clear_history();
 	return (0);
 }
+*/
