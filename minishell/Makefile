@@ -13,6 +13,9 @@ SRCS = \
 	$(SRC_DIR)/utilits.c \
 	$(SRC_DIR)/verify_input.c \
 	$(SRC_DIR)/verify_input_utils.c \
+	$(SRC_DIR)/lexer.c \
+	$(SRC_DIR)/lexer_utils.c \
+	$(SRC_DIR)/lexer_tokens.c \
 
 OBJS = $(SRCS:.c=.o)
 

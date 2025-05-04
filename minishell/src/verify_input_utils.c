@@ -61,18 +61,3 @@ int	is_pipe_space_pipe(const char *str, int *i)
 	}
 	return (0);
 }
-
-//int next_is_valid(const char *str, int start)
-//{
-//	int	i;
-//
-//	i = start;
-//	while (str[i] && is_delimiter(str[i]))
-//		i++;
-//	if(str[i] == '\0')
-//		return (0);
-//	if (str[i] == '>' || str[i] == '<')
-//		return (0);
-//	return (1);
-//
-//}
