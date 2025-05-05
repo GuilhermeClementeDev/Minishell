@@ -6,7 +6,7 @@
 /*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:36 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/04 18:57:17 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/05/04 23:48:20 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ static const char	*token_type_to_str(int type)
 		return ("WORD");
 	else if (type == T_PIPE)
 		return ("PIPE");
-	else if (type == T_REDIRECT_IN)
+	else if (type == T_RED_IN)
 		return ("REDIR_IN");
-	else if (type == T_REDIRECT_OUT)
+	else if (type == T_RED_OUT)
 		return ("REDIR_OUT");
 	else if (type == T_HEREDOC)
 		return ("HEREDOC");
@@ -41,6 +41,50 @@ void	print_tokens(t_token **head)
 	}
 }
 
+
+static const char	*redir_type_to_str(int type)
+{
+	if (type == T_RED_IN)
+		return ("<");
+	else if (type == T_RED_OUT)
+		return (">");
+	else if (type == T_HEREDOC)
+		return ("<<");
+	else if (type == T_APPEND)
+		return (">>");
+	return ("UNKNOWN");
+}
+
+void	print_cmds(t_cmd **cmd)
+{
+	int	i;
+	t_cmd	*cmds;
+	cmds = *cmd;
+	t_redirect *redir;
+
+	while (cmds)
+	{
+		printf("Command:\n");
+		i = 0;
+		while (cmds->args && cmds->args[i])
+		{
+			printf("  argv[%d]: %s\n", i, cmds->args[i]);
+			i++;
+		}
+		if (!cmds->args || i == 0)
+			printf("  (empty argv)\n");
+		redir = cmds->redirects;
+		while (redir)
+		{
+			printf("  redirect: %s %s\n", redir_type_to_str(redir->type), redir->filename);
+			redir = redir->next;
+		}
+		cmds = cmds->next;
+	}
+}
+
+
+
 static int	should_add_to_history(char *str)
 {
 	if (!str || !*str)
@@ -54,6 +98,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
 	t_token	*token_list;
+	t_cmd	*cmd_list;
 
 	(void)argc;
 	(void)argv;
@@ -61,7 +106,6 @@ int	main(int argc, char **argv, char **envp)
 	while (TRUE)
 	{
 		input = readline("minishell> ");
-		//input = "texte >  > outro_teste";
 		if (!input)
 			break ;
 		//função que verifica se a string é vazia ou só tem espaços
@@ -76,14 +120,21 @@ int	main(int argc, char **argv, char **envp)
 			free(input);
 			break ;
 		}
-		token_list = lexer(input); //se pa trata erro aqui de malloc???
+		//tokenização
+		token_list = lexer(input);
 		clean_tokens(token_list);
-		print_tokens(&token_list);
-		//free_token_list(token_list); //função que libera a lista de tokens
+		//print_tokens(&token_list); //função que imprime a lista de tokens
+
+		//parsing
+		cmd_list = parse_tokens(token_list); //se pa trata erro aqui de malloc???
+		print_cmds(&cmd_list); //função que imprime a lista de comandos
+
 		if (should_add_to_history(input))
 			add_history(input);
 		//printf("%s\n", input);
 		free(input);
+		free_token_list(token_list);
+		free_commands(cmd_list);
 	}
 	clear_history();
 	return (0);

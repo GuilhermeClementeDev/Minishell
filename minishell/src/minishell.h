@@ -6,7 +6,7 @@
 /*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/04 19:38:08 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/05/04 23:48:59 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 
 # define T_WORD 1
 # define T_PIPE 2
-# define T_REDIRECT_IN 3
-# define T_REDIRECT_OUT 4
+# define T_RED_IN 3
+# define T_RED_OUT 4
 # define T_APPEND 5
 # define T_HEREDOC 6
 
@@ -35,6 +35,21 @@ typedef struct s_token
 	char	*value;
 	struct s_token	*next;
 }	t_token;
+
+typedef struct s_redirect
+{
+	int		type;
+	char	*filename;
+	struct s_redirect	*next;
+}	t_redirect;
+
+
+typedef struct s_cmd
+{
+	char			**args;
+	t_redirect		*redirects;
+	struct s_cmd	*next;
+}	t_cmd;
 
 int	ft_not_only_spaces(char *str);
 
@@ -64,5 +79,18 @@ int	is_append_or_output(t_token **head, const char *input, int *i);
 int	is_heredoc_or_input(t_token **head, const char *input, int *i);
 int	is_pipe_token(t_token **head, const char *input, int *i);
 void	process_token(t_token **head, const char *input, int *i);
+
+//parser.c
+t_cmd	*parse_tokens(t_token *token);
+
+//parser_utils.c
+int	handle_redirect(t_token **token, t_redirect **redirects);
+int	is_redirect_type(int type);
+
+//free_elements.c
+void	free_token_list(t_token *head);
+void	free_redirects(t_redirect *redirects);
+void	free_commands(t_cmd *cmds);
+
 
 #endif

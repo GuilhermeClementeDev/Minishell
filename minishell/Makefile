@@ -16,6 +16,9 @@ SRCS = \
 	$(SRC_DIR)/lexer.c \
 	$(SRC_DIR)/lexer_utils.c \
 	$(SRC_DIR)/lexer_tokens.c \
+	$(SRC_DIR)/parser.c \
+	$(SRC_DIR)/parser_utils.c \
+	$(SRC_DIR)/free_elements.c \
 
 OBJS = $(SRCS:.c=.o)
 
