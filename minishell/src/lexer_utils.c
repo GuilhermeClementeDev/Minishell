@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/09 16:46:54 by gda-conc          #+#    #+#             */
+/*   Updated: 2025/05/09 16:53:33 by gda-conc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	skip_quoted(const char *input, int *i)
@@ -43,8 +55,7 @@ static int	calc_word_len(const char *input, int *i)
 	return (len);
 }
 
-
-void	get_word(t_token **head ,const char *input, int *i)
+void	get_word(t_token **head, const char *input, int *i)
 {
 	int		start;
 	int		len;
@@ -102,5 +113,3 @@ void	clean_tokens(t_token *head)
 		head = head->next;
 	}
 }
-
-

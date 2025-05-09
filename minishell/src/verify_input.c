@@ -1,8 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   verify_input.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/09 16:37:45 by gda-conc          #+#    #+#             */
+/*   Updated: 2025/05/09 16:40:07 by gda-conc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-// Função que verifica se a string tem aspas não fechadas
-// e retorna 1 se tiver erro, 0 se não tiver
-int verify_quotes(const char *str)
+int	verify_quotes(const char *str)
 {
 	int	i;
 	int	single_quotes;
@@ -19,12 +29,10 @@ int verify_quotes(const char *str)
 			double_quotes++;
 		i++;
 	}
-	// Verifica se as aspas não estão fechadas, e retorna erro
 	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
 		return (1);
 	return (0);
-	}
-
+}
 
 //essa função ta erradaaaa "teste >  > outr_teste"
 int	verify_redirects(const char *str)
@@ -37,7 +45,7 @@ int	verify_redirects(const char *str)
 		if (inside_quotes(str, i))
 		{
 			i++;
-			continue;
+			continue ;
 		}
 		if (str[i] == '>' || str[i] == '<')
 		{
@@ -47,7 +55,7 @@ int	verify_redirects(const char *str)
 			while (str[i] && is_delimiter(str[i]))
 				i++;
 			if (!str[i] || str[i] == '>' || str[i] == '<' || str[i] == '|')
-				return (1); // Erro: sem arquivo depois do redirecionamento
+				return (1);
 		}
 		else
 			i++;
@@ -78,42 +86,37 @@ int	verify_tokens(const char *str)
 {
 	if (ft_strchr(str, '|') && str[0] == '|')
 	{
-		ft_putstr_fd("Syntax error: unexpected token '|'\n",2);
+		ft_putstr_fd("Syntax error: unexpected token '|'\n", 2);
 		return (1);
 	}
 	if (ft_strchr(str, '|') && str[ft_strlen(str) - 1] == '|')
 	{
-		ft_putstr_fd("Syntax error: unexpected token '|'\n",2);
+		ft_putstr_fd("Syntax error: unexpected token '|'\n", 2);
 		return (1);
 	}
 	if (ft_strchr(str, '&') && str[0] == '&')
 	{
-		ft_putstr_fd("Syntax error: unexpected token '&'\n",2);
+		ft_putstr_fd("Syntax error: unexpected token '&'\n", 2);
 		return (1);
 	}
-	//não sei se devo verificar se o & ta no final
 	return (0);
 }
-
-
 
 int	check_syntax_error(const char *str)
 {
 	if (verify_quotes(str))
 	{
-		ft_putstr_fd("Syntax error: unclosed quotes\n",2);
+		ft_putstr_fd("Syntax error: unclosed quotes\n", 2);
 		return (1);
 	}
 	if (verify_redirects(str))
 	{
-		ft_putstr_fd("Syntax error: invalid redirection\n",2);
+		ft_putstr_fd("Syntax error: invalid redirection\n", 2);
 		return (1);
 	}
 	if (verify_double_tokens(str))
 		return (1);
-		//devo verificar se o & ta no inicio ou no final??
 	if (verify_tokens(str))
 		return (1);
 	return (0);
 }
-

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/09 17:01:13 by gda-conc          #+#    #+#             */
+/*   Updated: 2025/05/09 17:04:26 by gda-conc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	handle_redirect(t_token **token, t_redirect **redirects)
@@ -22,7 +34,7 @@ int	handle_redirect(t_token **token, t_redirect **redirects)
 				curr = curr->next;
 			curr->next = new;
 		}
-		*token = (*token)->next; // pula o nome do arquivo
+		*token = (*token)->next;
 	}
 	return (1);
 }

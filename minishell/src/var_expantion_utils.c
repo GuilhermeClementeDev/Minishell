@@ -1,5 +1,16 @@
-#include "minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   var_expantion_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/09 17:10:29 by gda-conc          #+#    #+#             */
+/*   Updated: 2025/05/09 17:11:00 by gda-conc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "minishell.h"
 
 int	handle_quoted_part(const char *input, int *i, char **expanded_str)
 {
@@ -18,7 +29,6 @@ int	handle_variable_expansion(const char *input, int *i, char **expanded_str)
 {
 	char	*temp;
 
-	// Verifica se não está dentro de aspas simples
 	if (input[*i + 1] != '\0' && input[*i + 1] != '\'' && input[*i + 1] != '\"')
 	{
 		temp = expand_variable(input, i);
@@ -29,9 +39,6 @@ int	handle_variable_expansion(const char *input, int *i, char **expanded_str)
 	}
 	return (1);
 }
-
-
-
 
 int	handle_normal_char(const char *input, int *i, char **expanded_str)
 {

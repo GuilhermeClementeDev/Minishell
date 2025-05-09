@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 21:24:19 by bieldojt          #+#    #+#             */
-/*   Updated: 2025/05/04 19:36:38 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/05/09 16:40:48 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //LEMBRAR DE MUDAR O HEADER DA 42!!!!!!
 
 #include "minishell.h"
-
 
 t_token	*create_token(int type, char *value)
 {
@@ -54,7 +53,6 @@ void	create_and_add_token(t_token **head, int type, char *value)
 		return ;
 	add_token(head, new_token);
 }
-
 
 t_token	*lexer(const char *input)
 {

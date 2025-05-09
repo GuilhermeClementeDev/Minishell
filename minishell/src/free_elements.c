@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_elements.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/09 16:23:38 by gda-conc          #+#    #+#             */
+/*   Updated: 2025/05/09 16:23:57 by gda-conc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void free_token_list(t_token *head)
+void	free_token_list(t_token *head)
 {
 	t_token	*tmp;
 
@@ -29,7 +41,7 @@ void	free_redirects(t_redirect *redirects)
 void	free_commands(t_cmd *cmds)
 {
 	t_cmd	*tmp;
-	int			i;
+	int		i;
 
 	while (cmds)
 	{
