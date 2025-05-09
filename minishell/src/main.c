@@ -6,7 +6,7 @@
 /*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:36 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/07 11:53:28 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/05/09 11:31:12 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ int	main(int argc, char **argv, char **envp)
 	while (TRUE)
 	{
 		input = readline("minishell> ");
+		//input = ft_strdup("this is a test");
 		if (!input)
 			break ;
 		//função que verifica se a string é vazia ou só tem espaços
@@ -151,11 +152,15 @@ int	main(int argc, char **argv, char **envp)
 		}
 		//tokenização
 		token_list = lexer(input);
+		expand_variables_in_token(token_list); // Expande variáveis nos tokens
 		clean_tokens(token_list);
 		//print_tokens(&token_list); //função que imprime a lista de tokens
 
+
+
 		//parsing
 		cmd_list = parse_tokens(token_list); //se pa trata erro aqui de malloc???
+
 		print_cmds(&cmd_list); //função que imprime a lista de comandos
 		print_cmdsss(&cmd_list); //sadfgkhasgda
 

@@ -6,7 +6,7 @@
 /*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/04 23:48:59 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/05/09 00:00:08 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,17 @@ int	is_redirect_type(int type);
 void	free_token_list(t_token *head);
 void	free_redirects(t_redirect *redirects);
 void	free_commands(t_cmd *cmds);
+
+//var_expansion.c
+void	expand_variables_in_token(t_token *token);
+char	*expand_variable(const char *input, int *index);
+
+//var_expansion_utils.c
+int	handle_quoted_part(const char *input, int *i, char **expanded_str);
+int	handle_variable_expansion(const char *input, int *i, char **expanded_str);
+int	handle_normal_char(const char *input, int *i, char **expanded_str);
+char	*initialize_expanded_str(void);
+int	handle_quotes_or_expansion(char **expanded_str, const char *input, int *i);
 
 
 #endif
