@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:36 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/04 23:48:20 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/05/07 11:53:28 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,35 @@ void	print_cmds(t_cmd **cmd)
 	}
 }
 
+void	print_cmdsss(t_cmd **cmd)
+{
+	int	i;
+	t_cmd	*cmds;
+	cmds = *cmd;
+	t_redirect *redir;
+
+	while (cmds)
+	{
+		printf("Command:\n");
+		i = 0;
+		while (cmds->args && cmds->args[i])
+		{
+			printf("%s", cmds->args[i]);
+			i++;
+		}
+			printf("\n");
+		if (!cmds->args || i == 0)
+			printf("  (empty argv)\n");
+		redir = cmds->redirects;
+		while (redir)
+		{
+			printf("  redirect: %s %s\n", redir_type_to_str(redir->type), redir->filename);
+			redir = redir->next;
+		}
+		cmds = cmds->next;
+	}
+}
+
 
 
 static int	should_add_to_history(char *str)
@@ -128,6 +157,7 @@ int	main(int argc, char **argv, char **envp)
 		//parsing
 		cmd_list = parse_tokens(token_list); //se pa trata erro aqui de malloc???
 		print_cmds(&cmd_list); //função que imprime a lista de comandos
+		print_cmdsss(&cmd_list); //sadfgkhasgda
 
 		if (should_add_to_history(input))
 			add_history(input);
@@ -135,6 +165,7 @@ int	main(int argc, char **argv, char **envp)
 		free(input);
 		free_token_list(token_list);
 		free_commands(cmd_list);
+		input = NULL;
 	}
 	clear_history();
 	return (0);
