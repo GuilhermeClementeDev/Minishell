@@ -11,16 +11,21 @@ int	inside_quotes(const char *str, int i)
 	j = 0;
 	while (j < i)
 	{
-		if (str[j] == '\'')
+		if (str[j] == '\'' && inside_double_quote % 2 == 0)  // Alteração para verificar aspas simples externas
 			inside_single_quote = !inside_single_quote;
-		else if (str[j] == '\"')
+		else if (str[j] == '\"' && inside_single_quote % 2 == 0)  // Alteração para verificar aspas duplas externas
 			inside_double_quote = !inside_double_quote;
 		j++;
 	}
-	if (inside_single_quote || inside_double_quote)
-		return (1);
-	return (0);
+	if (inside_single_quote)
+		return (1); // Dentro de aspas simples
+	if (inside_double_quote)
+		return (2); // Dentro de aspas duplas
+	return (0);  // Fora de aspas
 }
+
+
+
 
 
 int	is_delimiter(char c)
