@@ -12,6 +12,8 @@ SRCS = \
 	$(SRC_DIR)/main.c \
 	$(SRC_DIR)/utilits.c \
 	$(SRC_DIR)/builtins.c \
+	$(SRC_DIR)/builtins2.c \
+	$(SRC_DIR)/frees.c \
 	$(SRC_DIR)/error.c \
 
 OBJS = $(SRCS:.c=.o)

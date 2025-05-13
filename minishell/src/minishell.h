@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/08 18:53:52 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:08:43 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@
 # define FALSE 0
 
 int		ft_not_only_spaces(char *str);
-char	*get_env_value(char **envp, const char *key);
+char	*get_env_value(char **envp, char *key);
 int		count_env(char **env);
+char	**alloc_env(int entry_count);
+void	copy_env_skip(char **old_env, char **new_env, char *skip, char *new_var);
 
 
 void	ft_error(char *str, int n);
@@ -35,5 +37,6 @@ void	ft_env(char **envp);
 void	ft_cd(char **str, char **envp);
 void	ft_exit(char **args);
 
+void	free_env(char **env);
 
 #endif
