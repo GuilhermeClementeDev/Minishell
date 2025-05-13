@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 11:15:18 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/13 16:08:25 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:36:51 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ char	*get_env_value(char **envp, char *key)
 	}
 	return (NULL);
 }
+
 int	count_env(char **env)
 {
 	int	i;
@@ -54,9 +55,10 @@ int	count_env(char **env)
 		i++;
 	return (i);
 }
-char **alloc_env(int entry_count)
+
+char	**alloc_env(int entry_count)
 {
-	char **new_env;
+	char	**new_env;
 
 	new_env = malloc(sizeof(char *) * (entry_count + 1));
 	if (!new_env)
@@ -64,6 +66,7 @@ char **alloc_env(int entry_count)
 	new_env[entry_count] = NULL;
 	return (new_env);
 }
+
 void	copy_env_skip(char **old_env, char **new_env, char *skip, char *new_var)
 {
 	int	i;
@@ -85,8 +88,8 @@ void	copy_env_skip(char **old_env, char **new_env, char *skip, char *new_var)
 				i++;
 			}
 		}
-		if(!old_env[i])
-			break;
+		if (!old_env[i])
+			break ;
 		new_env[k] = ft_strdup(old_env[i]);
 		i++;
 		k++;

@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 15:15:59 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/13 15:47:46 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:34:57 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	free_env(char **env)
 
 	i = 0;
 	if (!env)
-		return;
+		return ;
 	while (env[i])
 	{
 		free(env[i]);
