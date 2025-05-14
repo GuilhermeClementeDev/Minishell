@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   frees.c                                            :+:      :+:    :+:   */
+/*   utilits.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/13 15:15:59 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/13 16:34:57 by guclemen         ###   ########.fr       */
+/*   Created: 2025/04/11 11:15:18 by guclemen          #+#    #+#             */
+/*   Updated: 2025/05/14 14:38:38 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-void	free_env(char **env)
+int	ft_not_only_spaces(char *str)
 {
 	int	i;
 
 	i = 0;
-	if (!env)
-		return ;
-	while (env[i])
+	while (str[i])
 	{
-		free(env[i]);
+		if (str[i] != ' ' || !(str[i] >= '\t' && str[i] <= '\r'))
+			break ;
 		i++;
 	}
-	free(env);
+	if (str[i])
+		return (1);
+	return (0);
 }

@@ -6,12 +6,12 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:36 by guclemen          #+#    #+#             */
-/*   Updated: 2025/04/21 17:41:40 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:41:33 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-/*
+
 static int	should_add_to_history(char *str)
 {
 	if (!str || !*str)
@@ -41,4 +41,3 @@ int	main(int argc, char **argv, char **envp)
 	clear_history();
 	return (0);
 }
-*/

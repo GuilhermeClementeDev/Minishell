@@ -6,11 +6,11 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 13:28:11 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/01 13:51:10 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:38:27 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static void	ft_msg(char *str, int n)
 {
@@ -33,4 +33,19 @@ void	ft_error(char *str, int n)
 {
 	ft_msg(str, n);
 	exit(n);
+}
+
+void	free_env(char **env)
+{
+	int	i;
+
+	i = 0;
+	if (!env)
+		return ;
+	while (env[i])
+	{
+		free(env[i]);
+		i++;
+	}
+	free(env);
 }

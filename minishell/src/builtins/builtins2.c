@@ -6,60 +6,17 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:17:20 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/14 14:01:23 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:39:46 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-static int	is_valid_export(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (!str)
-		return (0);
-	while (str[i] && str[i] != '=')
-		i++;
-	if (i == 0 || str[i] != '=')
-		return (0);
-	if (str[i - 1] == ' ' || str[i + 1] == ' ')
-		return (0);
-	return (1);
-}
-static char	*ft_no_spaces(char *str)
-{
-	while (*str == ' ' || *str == '\t')
-		str++;
-	return ft_strdup(str);
-}
-static int	ft_change_value(char **env, char *new_var)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (env[i])
-	{
-		j = 0;
-		while (new_var[j] && env[i][j] == new_var[j] && new_var[j] != '=' && env[i][j] != '=')
-			j++;
-		if (new_var[j] == '=' && env[i][j] == '=')
-		{
-			free(env[i]);
-			env[i] = ft_no_spaces(new_var);
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
+#include "../minishell.h"
 
 char	**ft_export(char **env, char *new_var)
 {
-	int	count;
-	char **new_env;
-	char *no_spaces;
+	int		count;
+	char	**new_env;
+	char	*no_spaces;
 
 	if (!is_valid_export(new_var))
 		return (env);
@@ -78,19 +35,20 @@ char	**ft_export(char **env, char *new_var)
 
 char	**ft_unset(char **env, char *to_remove)
 {
-	int count;
+	int		count;
+	char	**new_env;
 
 	if (!get_env_value(env, to_remove))
 		return (env);
 	count = count_env(env) - 1;
-	char **new_env = alloc_env(count);
+	new_env = alloc_env(count);
 	if (!new_env)
 		return (env);
 	copy_env_skip(env, new_env, to_remove, NULL);
 	free_env(env);
 	return (new_env);
 }
-
+/*
 int main(void) {
     char *test_env[] = {
         "USER=guest",
@@ -133,4 +91,4 @@ int main(void) {
 
     free_env(env);
     return 0;
-}
+}*/

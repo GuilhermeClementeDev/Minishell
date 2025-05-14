@@ -6,11 +6,11 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 16:56:02 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/13 16:09:48 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:38:17 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	ft_echo(char **str)
 {
@@ -78,12 +78,11 @@ void	ft_cd(char **str, char **envp)
 
 void	ft_exit(char **args)
 {
-	int status;
+	int	status;
 
 	status = 0;
 	if (args[1])
 		status = ft_atoi(args[1]);
-
 	printf("exit\n");
 	exit(status);
 }
