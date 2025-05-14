@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:06:49 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/14 14:50:04 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:53:06 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int	ft_change_value(char **env, char *new_var)
 	while (env[i])
 	{
 		j = 0;
-		while (new_var[j] && env[i][j] == new_var[j] && new_var[j] != '=' && env[i][j] != '=')
+		while (new_var[j] && env[i][j] == new_var[j] \
+		&& new_var[j] != '=' && env[i][j] != '=')
 			j++;
 		if (new_var[j] == '=' && env[i][j] == '=')
 		{
