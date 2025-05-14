@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/14 14:30:52 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:49:36 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*get_env_value(char **envp, char *key);
 int		count_env(char **env);
 char	**alloc_env(int entry_count);
 void	copy_env_skip(char **old_env, char **new_env, \
-							char *skip, char *new_var);
+char *skip, char *new_var);
 
 //utilits_export
 int		is_valid_export(char *str);
