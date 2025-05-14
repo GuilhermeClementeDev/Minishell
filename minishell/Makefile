@@ -5,6 +5,7 @@ CFLAGS = -Wall -Wextra -Werror -g
 
 SRC_DIR = src
 LIB_DIR = lib
+BUILTIN_DIR = builtins
 
 PARSING_DIR = parsing
 
@@ -25,6 +26,12 @@ SRCS = \
 	$(SRC_DIR)/$(PARSING_DIR)/free_elements.c \
 	$(SRC_DIR)/$(PARSING_DIR)/prints.c \
 	$(SRC_DIR)/$(PARSING_DIR)/prints_utils.c \
+	$(SRC_DIR)/$(BUILTIN_DIR)/utilits.c \
+	$(SRC_DIR)/$(BUILTIN_DIR)/utilits_env.c \
+	$(SRC_DIR)/$(BUILTIN_DIR)/utilits_export.c \
+	$(SRC_DIR)/$(BUILTIN_DIR)/builtins.c \
+	$(SRC_DIR)/$(BUILTIN_DIR)/builtins2.c \
+	$(SRC_DIR)/$(BUILTIN_DIR)/error.c \
 
 OBJS = $(SRCS:.c=.o)
 
