@@ -6,7 +6,7 @@
 /*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/14 17:33:24 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/05/14 17:41:44 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,33 +111,33 @@ void		print_cmds(t_cmd **cmd);
 const char	*token_type_to_str(int type);
 const char	*redir_type_to_str(int type);
 //utilits
-int		ft_not_only_spaces(char *str);
+int			ft_not_only_spaces(char *str);
 
 //utilits_env
-char	*get_env_value(char **envp, char *key);
-int		count_env(char **env);
-char	**alloc_env(int entry_count);
-void	copy_env_skip(char **old_env, char **new_env, \
+char		*get_env_value(char **envp, char *key);
+int			count_env(char **env);
+char		**alloc_env(int entry_count);
+void		copy_env_skip(char **old_env, char **new_env, \
 char *skip, char *new_var);
 
 //utilits_export
-int		is_valid_export(char *str);
-char	*ft_no_spaces(char *str);
-int		ft_change_value(char **env, char *new_var);
+int			is_valid_export(char *str);
+char		*ft_no_spaces(char *str);
+int			ft_change_value(char **env, char *new_var);
 
 //error
-void	ft_error(char *str, int n);
-void	free_env(char **env);
+void		ft_error(char *str, int n);
+void		free_env(char **env);
 
 //builtins1
-void	ft_echo(char **str);
-void	ft_pwd(void);
-void	ft_env(char **envp);
-void	ft_cd(char **str, char **envp);
-void	ft_exit(char **args);
+void		ft_echo(char **str);
+void		ft_pwd(void);
+void		ft_env(char **envp);
+void		ft_cd(char **str, char **envp);
+void		ft_exit(char **args);
 
 //builtins2
-char	**ft_export(char **env, char *new_var);
-char	**ft_unset(char **env, char *to_remove);
+char		**ft_export(char **env, char *new_var);
+char		**ft_unset(char **env, char *to_remove);
 
 #endif

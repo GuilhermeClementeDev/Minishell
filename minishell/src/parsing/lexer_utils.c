@@ -6,7 +6,7 @@
 /*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:46:54 by gda-conc          #+#    #+#             */
-/*   Updated: 2025/05/14 13:48:01 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/05/14 17:44:18 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ static int	calc_word_len(const char *input, int *i)
 		if (input[*i] == '\'' || input[*i] == '"')
 			len += skip_quoted(input, i);
 		else if (is_delimiter(input[*i]) || input[*i] == '|' || \
-				input[*i] == '<' || input[*i] == '>')
+		input[*i] == '<' || input[*i] == '>')
+		{
 			break ;
+		}
 		else
 		{
 			(*i)++;
