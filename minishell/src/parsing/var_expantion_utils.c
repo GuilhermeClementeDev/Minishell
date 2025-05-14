@@ -6,13 +6,13 @@
 /*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:10:29 by gda-conc          #+#    #+#             */
-/*   Updated: 2025/05/09 17:11:00 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:57:09 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-int	handle_quoted_part(const char *input, int *i, char **expanded_str)
+int	quoted_part(const char *input, int *i, char **expanded_str)
 {
 	char	*temp;
 
@@ -25,7 +25,7 @@ int	handle_quoted_part(const char *input, int *i, char **expanded_str)
 	return (1);
 }
 
-int	handle_variable_expansion(const char *input, int *i, char **expanded_str)
+int	var_expansion(const char *input, int *i, char **expanded_str)
 {
 	char	*temp;
 
@@ -63,21 +63,21 @@ char	*initialize_expanded_str(void)
 	return (expanded_str);
 }
 
-int	handle_quotes_or_expansion(char **expanded_str, const char *input, int *i)
+int	quotes_or_expansion(char **exp_str, const char *input, int *i)
 {
 	if (inside_quotes(input, *i) == 1)
 	{
-		if (!handle_quoted_part(input, i, expanded_str))
+		if (!quoted_part(input, i, exp_str))
 			return (0);
 	}
 	else if (input[*i] == '$' && inside_quotes(input, *i) != 1)
 	{
-		if (!handle_variable_expansion(input, i, expanded_str))
+		if (!var_expansion(input, i, exp_str))
 			return (0);
 	}
 	else
 	{
-		if (!handle_normal_char(input, i, expanded_str))
+		if (!handle_normal_char(input, i, exp_str))
 			return (0);
 	}
 	return (1);

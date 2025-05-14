@@ -6,13 +6,13 @@
 /*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 21:24:19 by bieldojt          #+#    #+#             */
-/*   Updated: 2025/05/09 16:40:48 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/05/14 13:47:57 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //LEMBRAR DE MUDAR O HEADER DA 42!!!!!!
 
-#include "minishell.h"
+#include "../minishell.h"
 
 t_token	*create_token(int type, char *value)
 {

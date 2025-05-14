@@ -6,11 +6,11 @@
 /*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:55:53 by gda-conc          #+#    #+#             */
-/*   Updated: 2025/05/09 17:00:40 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:58:32 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static char	*get_env_var_value(const char *var)
 {
@@ -49,12 +49,12 @@ void	expand_variables_in_str(char **str, const char *input)
 	{
 		if (inside_quotes(input, i) == 1)
 		{
-			if (!handle_quoted_part(input, &i, &expanded_str))
+			if (!quoted_part(input, &i, &expanded_str))
 				return ;
 		}
 		else if (input[i] == '$' && inside_quotes(input, i) != 1)
 		{
-			if (!handle_variable_expansion(input, &i, &expanded_str))
+			if (!var_expansion(input, &i, &expanded_str))
 				return ;
 		}
 		else

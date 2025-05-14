@@ -6,11 +6,11 @@
 /*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:41:12 by gda-conc          #+#    #+#             */
-/*   Updated: 2025/05/09 16:44:29 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/05/14 13:47:14 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	inside_quotes(const char *str, int i)
 {

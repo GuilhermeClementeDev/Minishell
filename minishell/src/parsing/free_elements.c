@@ -6,11 +6,11 @@
 /*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:23:38 by gda-conc          #+#    #+#             */
-/*   Updated: 2025/05/09 16:23:57 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/05/14 13:48:11 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	free_token_list(t_token *head)
 {

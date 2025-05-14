@@ -6,113 +6,43 @@
 /*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:36 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/09 16:28:28 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:50:31 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static const char	*token_type_to_str(int type)
+t_token	*list_token(char *input)
 {
-	if (type == T_WORD)
-		return ("WORD");
-	else if (type == T_PIPE)
-		return ("PIPE");
-	else if (type == T_RED_IN)
-		return ("REDIR_IN");
-	else if (type == T_RED_OUT)
-		return ("REDIR_OUT");
-	else if (type == T_HEREDOC)
-		return ("HEREDOC");
-	else if (type == T_APPEND)
-		return ("APPEND");
-	return ("UNKNOWN");
+	t_token	*token_list;
+
+	token_list = lexer(input);
+	expand_variables_in_token(token_list);
+	clean_tokens(token_list);
+	return (token_list);
 }
 
-void	print_tokens(t_token **head)
+void	free_input_token_cmd(char *input, t_token *token_list, t_cmd *cmd_list)
 {
-	t_token	*tmp;
+	free(input);
+	free_token_list(token_list);
+	free_commands(cmd_list);
+}
 
-	tmp = *head;
-	while (tmp)
+int	is_space_or_invalid(char *input)
+{
+	if (!ft_not_only_spaces(input))
 	{
-		printf("[%s: %s]\n", token_type_to_str(tmp->type), tmp->value);
-		tmp = tmp->next;
+		free(input);
+		return (1);
 	}
-}
-
-
-static const char	*redir_type_to_str(int type)
-{
-	if (type == T_RED_IN)
-		return ("<");
-	else if (type == T_RED_OUT)
-		return (">");
-	else if (type == T_HEREDOC)
-		return ("<<");
-	else if (type == T_APPEND)
-		return (">>");
-	return ("UNKNOWN");
-}
-
-void	print_cmds(t_cmd **cmd)
-{
-	int	i;
-	t_cmd	*cmds;
-	cmds = *cmd;
-	t_redirect *redir;
-
-	while (cmds)
+	if (check_syntax_error(input))
 	{
-		printf("Command:\n");
-		i = 0;
-		while (cmds->args && cmds->args[i])
-		{
-			printf("  argv[%d]: %s\n", i, cmds->args[i]);
-			i++;
-		}
-		if (!cmds->args || i == 0)
-			printf("  (empty argv)\n");
-		redir = cmds->redirects;
-		while (redir)
-		{
-			printf("  redirect: %s %s\n", redir_type_to_str(redir->type), redir->filename);
-			redir = redir->next;
-		}
-		cmds = cmds->next;
+		free(input);
+		return (1);
 	}
+	return (0);
 }
-
-void	print_cmdsss(t_cmd **cmd)
-{
-	int	i;
-	t_cmd	*cmds;
-	cmds = *cmd;
-	t_redirect *redir;
-
-	while (cmds)
-	{
-		printf("Command:\n");
-		i = 0;
-		while (cmds->args && cmds->args[i])
-		{
-			printf("%s", cmds->args[i]);
-			i++;
-		}
-			printf("\n");
-		if (!cmds->args || i == 0)
-			printf("  (empty argv)\n");
-		redir = cmds->redirects;
-		while (redir)
-		{
-			printf("  redirect: %s %s\n", redir_type_to_str(redir->type), redir->filename);
-			redir = redir->next;
-		}
-		cmds = cmds->next;
-	}
-}
-
-
 
 static int	should_add_to_history(char *str)
 {
@@ -137,27 +67,14 @@ int	main(int argc, char **argv, char **envp)
 		input = readline("minishell> ");
 		if (!input)
 			break ;
-		if (!ft_not_only_spaces(input))
-		{
-			free(input);
+		if (is_space_or_invalid(input))
 			continue ;
-		}
-		if(check_syntax_error(input))
-		{
-			free(input);
-			break ;
-		}
-		token_list = lexer(input);
-		expand_variables_in_token(token_list);
-		clean_tokens(token_list);
+		token_list = list_token(input);
 		cmd_list = parse_tokens(token_list);
 		print_cmds(&cmd_list);
-		//print_cmdsss(&cmd_list);
 		if (should_add_to_history(input))
 			add_history(input);
-		free(input);
-		free_token_list(token_list);
-		free_commands(cmd_list);
+		free_input_token_cmd(input, token_list, cmd_list);
 		input = NULL;
 	}
 	clear_history();

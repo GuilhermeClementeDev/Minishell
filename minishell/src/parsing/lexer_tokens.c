@@ -6,11 +6,11 @@
 /*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:46:35 by gda-conc          #+#    #+#             */
-/*   Updated: 2025/05/09 16:46:38 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/05/14 13:48:05 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	is_append_or_output(t_token **head, const char *input, int *i)
 {

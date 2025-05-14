@@ -6,11 +6,11 @@
 /*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:46:54 by gda-conc          #+#    #+#             */
-/*   Updated: 2025/05/09 16:53:33 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/05/14 13:48:01 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static int	skip_quoted(const char *input, int *i)
 {

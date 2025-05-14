@@ -6,21 +6,25 @@ CFLAGS = -Wall -Wextra -Werror -g
 SRC_DIR = src
 LIB_DIR = lib
 
+PARSING_DIR = parsing
+
 LIBFT = $(LIB_DIR)/libft.a
 
 SRCS = \
 	$(SRC_DIR)/main.c \
 	$(SRC_DIR)/utilits.c \
-	$(SRC_DIR)/verify_input.c \
-	$(SRC_DIR)/verify_input_utils.c \
-	$(SRC_DIR)/lexer.c \
-	$(SRC_DIR)/lexer_utils.c \
-	$(SRC_DIR)/lexer_tokens.c \
-	$(SRC_DIR)/parser.c \
-	$(SRC_DIR)/parser_utils.c \
-	$(SRC_DIR)/var_expantion.c \
-	$(SRC_DIR)/var_expantion_utils.c \
-	$(SRC_DIR)/free_elements.c \
+	$(SRC_DIR)/$(PARSING_DIR)/verify_input.c \
+	$(SRC_DIR)/$(PARSING_DIR)/verify_input_utils.c \
+	$(SRC_DIR)/$(PARSING_DIR)/lexer.c \
+	$(SRC_DIR)/$(PARSING_DIR)/lexer_utils.c \
+	$(SRC_DIR)/$(PARSING_DIR)/lexer_tokens.c \
+	$(SRC_DIR)/$(PARSING_DIR)/parser.c \
+	$(SRC_DIR)/$(PARSING_DIR)/parser_utils.c \
+	$(SRC_DIR)/$(PARSING_DIR)/var_expantion.c \
+	$(SRC_DIR)/$(PARSING_DIR)/var_expantion_utils.c \
+	$(SRC_DIR)/$(PARSING_DIR)/free_elements.c \
+	$(SRC_DIR)/$(PARSING_DIR)/prints.c \
+	$(SRC_DIR)/$(PARSING_DIR)/prints_utils.c \
 
 OBJS = $(SRCS:.c=.o)
 

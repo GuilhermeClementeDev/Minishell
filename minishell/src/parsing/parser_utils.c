@@ -6,11 +6,11 @@
 /*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:01:13 by gda-conc          #+#    #+#             */
-/*   Updated: 2025/05/09 17:04:26 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/05/14 13:47:53 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	handle_redirect(t_token **token, t_redirect **redirects)
 {

@@ -6,11 +6,11 @@
 /*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:56:51 by bieldojt          #+#    #+#             */
-/*   Updated: 2025/05/05 12:06:28 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:00:09 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	count_args(t_token *token)
 {
@@ -22,7 +22,6 @@ int	count_args(t_token *token)
 		if (token->type == T_RED_IN || token->type == T_RED_OUT
 			|| token->type == T_HEREDOC || token->type == T_APPEND)
 		{
-			// Pula o nome do arquivo
 			if (token->next)
 				token = token->next;
 		}
@@ -32,9 +31,6 @@ int	count_args(t_token *token)
 	}
 	return (count);
 }
-
-
-
 
 static char	**fill_args(t_token **token, t_redirect **redirects)
 {
@@ -61,8 +57,6 @@ static char	**fill_args(t_token **token, t_redirect **redirects)
 	argv[i] = NULL;
 	return (argv);
 }
-
-
 
 t_cmd	*parse_tokens(t_token *token)
 {
@@ -92,5 +86,3 @@ t_cmd	*parse_tokens(t_token *token)
 	}
 	return (head);
 }
-
-
