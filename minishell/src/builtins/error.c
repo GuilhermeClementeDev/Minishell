@@ -1,29 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utilits.c                                          :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/11 11:15:18 by guclemen          #+#    #+#             */
-/*   Updated: 2025/04/11 12:07:28 by guclemen         ###   ########.fr       */
+/*   Created: 2025/05/01 13:28:11 by guclemen          #+#    #+#             */
+/*   Updated: 2025/05/14 14:38:27 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-int	ft_not_only_spaces(char *str)
+static void	ft_msg(char *str, int n)
+{
+	int	std;
+
+	if (n == 0)
+	{
+		std = 1;
+		ft_putstr_fd(str, std);
+	}
+	else
+	{
+		std = 2;
+		ft_putstr_fd("Error :(\n", std);
+		ft_putstr_fd(str, std);
+	}
+}
+
+void	ft_error(char *str, int n)
+{
+	ft_msg(str, n);
+	exit(n);
+}
+
+void	free_env(char **env)
 {
 	int	i;
 
 	i = 0;
-	while (str[i])
+	if (!env)
+		return ;
+	while (env[i])
 	{
-		if (str[i] != ' ' || !(str[i] >= '\t' && str[i] <= '\r'))
-			break ;
+		free(env[i]);
 		i++;
 	}
-	if (str[i])
-		return (1);
-	return (0);
+	free(env);
 }
