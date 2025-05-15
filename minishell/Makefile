@@ -13,7 +13,7 @@ LIBFT = $(LIB_DIR)/libft.a
 
 SRCS = \
 	$(SRC_DIR)/main.c \
-	$(SRC_DIR)/utilits.c \
+	$(SRC_DIR)/utilits_main.c \
 	$(SRC_DIR)/$(PARSING_DIR)/verify_input.c \
 	$(SRC_DIR)/$(PARSING_DIR)/verify_input_utils.c \
 	$(SRC_DIR)/$(PARSING_DIR)/lexer.c \

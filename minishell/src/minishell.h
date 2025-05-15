@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/14 17:41:44 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/05/15 16:15:48 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,21 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }	t_cmd;
 
+typedef struct s_shell
+{
+	char		*input;
+	t_token		*tokens;
+	t_cmd		*cmds;
+	char		**env;
+}	t_shell;
+
+//main
 int			ft_not_only_spaces(char *str);
+void		free_input_token_cmd(char *input, t_token *token_list, t_cmd *cmd_list);
+
+//utilits_main
+void	ft_build_shell(t_shell shell, char **envp);
+void	ft_clean_shell(t_shell shell);
 
 //verify_input.c
 int			verify_quotes(const char *str);

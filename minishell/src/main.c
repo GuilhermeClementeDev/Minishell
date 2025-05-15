@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:36 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/14 17:33:35 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/05/15 16:11:23 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,13 @@ int	is_space_or_invalid(char *input)
 	if (!ft_not_only_spaces(input))
 	{
 		free(input);
+		input = NULL;
 		return (1);
 	}
 	if (check_syntax_error(input))
 	{
 		free(input);
+		input = NULL;
 		return (1);
 	}
 	return (0);
@@ -55,27 +57,25 @@ static int	should_add_to_history(char *str)
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*input;
-	t_token	*token_list;
-	t_cmd	*cmd_list;
+	t_shell	shell;
 
 	(void)argc;
 	(void)argv;
-	(void)envp;
+
+	ft_build_shell(shell, envp);
 	while (TRUE)
 	{
-		input = readline("minishell> ");
-		if (!input)
+		shell.input = readline("minishell> ");
+		if (!shell.input)
 			break ;
-		if (is_space_or_invalid(input))
+		if (is_space_or_invalid(shell.input))
 			continue ;
-		token_list = list_token(input);
-		cmd_list = parse_tokens(token_list);
-		print_cmds(&cmd_list);
-		if (should_add_to_history(input))
-			add_history(input);
-		free_input_token_cmd(input, token_list, cmd_list);
-		input = NULL;
+		shell.tokens = list_token(shell.input);
+		shell.cmds = parse_tokens(shell.tokens);
+		print_cmds(&shell.cmds);
+		if (should_add_to_history(shell.input))
+			add_history(shell.input);
+		ft_clean_shell(shell);
 	}
 	clear_history();
 	return (0);

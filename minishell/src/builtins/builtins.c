@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 16:56:02 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/14 14:38:17 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/15 16:32:28 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void	ft_cd(char **str, char **envp)
 			ft_putstr_fd ((char *)path, 2);
 			ft_putstr_fd (": No such file or directory\n", 2);
 		}
+		else
+			ft_new_env_pwds(envp);
 	}
 }
 
