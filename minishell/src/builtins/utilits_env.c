@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:09:42 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/15 16:41:41 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/15 18:19:32 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,12 @@ void	copy_env_skip(char **old_env, char **new_env, char *skip, char *new_var)
 	k = 0;
 	while (old_env[i])
 	{
-		if (skip)
+		if (skip && ft_strnstr(old_env[i], skip, ft_strlen(skip)))
 		{
-			if (ft_strnstr(old_env[i], skip, ft_strlen(skip)))
-			{
-				if (new_var)
-					new_env[k++] = ft_strdup(new_var);
-				i++;
-				continue ;
-			}
+			if (new_var)
+				new_env[k++] = ft_strdup(new_var);
+			i++;
+			continue ;
 		}
 		new_env[k] = ft_strdup(old_env[i]);
 		i++;
@@ -77,6 +74,7 @@ void	copy_env_skip(char **old_env, char **new_env, char *skip, char *new_var)
 	if (new_var && !skip)
 		new_env[k] = ft_strdup(new_var);
 }
+
 void	ft_new_env_pwds(char **envp)
 {
 	char	*pwd;
@@ -86,7 +84,9 @@ void	ft_new_env_pwds(char **envp)
 	old_pwd = get_env_value(envp, "PWD");
 	old_pwd = ft_strjoin("OLDPWD=", old_pwd);
 	ft_change_value(envp, old_pwd);
+	free(old_pwd);
 	getcwd(cwd, sizeof(cwd));
 	pwd = ft_strjoin("PWD=", cwd);
 	ft_change_value(envp, pwd);
+	free(pwd);
 }

@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/15 16:15:48 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/15 18:13:37 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,12 @@ typedef struct s_shell
 
 //main
 int			ft_not_only_spaces(char *str);
-void		free_input_token_cmd(char *input, t_token *token_list, t_cmd *cmd_list);
+void		free_input_token_cmd(char *input, \
+	t_token *token_list, t_cmd *cmd_list);
 
 //utilits_main
-void	ft_build_shell(t_shell shell, char **envp);
-void	ft_clean_shell(t_shell shell);
+void		ft_build_shell(t_shell *shell, char **envp);
+void		ft_clean_shell(t_shell *shell);
 
 //verify_input.c
 int			verify_quotes(const char *str);
@@ -133,6 +134,7 @@ int			count_env(char **env);
 char		**alloc_env(int entry_count);
 void		copy_env_skip(char **old_env, char **new_env, \
 char *skip, char *new_var);
+void		ft_new_env_pwds(char **envp);
 
 //utilits_export
 int			is_valid_export(char *str);
