@@ -6,12 +6,12 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:19:25 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/15 23:54:42 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/16 00:35:48 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-/*
+
 int	is_builtin(char *cmd)
 {
 	int		size;
@@ -46,7 +46,7 @@ void	execute_builtin(t_shell *shell)
 		if (pid == 0)
 		{
 			// Aqui você pode tratar os redirecionamentos se necessário
-
+			/*
 			if (cmd->fd_out != 1)
 			{
 				dup2(cmd->fd_out, 1);
@@ -57,7 +57,7 @@ void	execute_builtin(t_shell *shell)
 				dup2(cmd->fd_in, 0);
 				close(cmd->fd_in);
 			}
-
+			*/
 
 			if (!ft_strncmp(command, "echo", 5))
 				ft_echo(shell->cmds->args);
@@ -85,4 +85,3 @@ void	ft_executer(t_shell *shell)
 		printf("Executável externo ainda não \
 		implementado: %s\n", shell->cmds->args[0]);
 }
-*/
