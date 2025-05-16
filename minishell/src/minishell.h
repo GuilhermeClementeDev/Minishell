@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/15 22:24:48 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/15 23:09:32 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,8 +157,7 @@ void		ft_exit(char **args);
 char		**ft_export(char **env, char *new_var);
 char		**ft_unset(char **env, char *to_remove);
 
-
 //executor
-void	ft_executer(t_cmd *cmd, char **env);
+void		ft_executer(t_cmd *cmd, char **env);
 
 #endif

@@ -6,18 +6,21 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:19:25 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/15 23:03:24 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/15 23:11:08 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
+/*
 int	is_builtin(char *cmd)
 {
 	int		size;
 
 	size = ft_strlen(cmd);
-	if (!ft_strncmp(cmd, "cd", size) || !ft_strncmp(cmd, "pwd", size) || !ft_strncmp(cmd, "exit", size) || !ft_strncmp(cmd, "export", size) || !ft_strncmp(cmd, "unset", size) || !ft_strncmp(cmd, "env", size) || !ft_strncmp(cmd, "echo", size))
+	if (!ft_strncmp(cmd, "cd", size) || !ft_strncmp(cmd, "pwd", size) || \
+	!ft_strncmp(cmd, "exit", size) || !ft_strncmp(cmd, "export", size) || \
+	!ft_strncmp(cmd, "unset", size) || !ft_strncmp(cmd, "env", size) || \
+	!ft_strncmp(cmd, "echo", size))
 		return (1);
 	return (0);
 }
@@ -42,7 +45,7 @@ void	execute_builtin(t_cmd *cmd, char **env)
 	pid = fork();
 	if (pid == 0)
 	{
-		/*
+
 		if (cmd->fd_out != 1)
 		{
 			dup2(cmd->fd_out, 1);
@@ -52,7 +55,7 @@ void	execute_builtin(t_cmd *cmd, char **env)
 		{
 			dup2(cmd->fd_in, 0);
 			close(cmd->fd_in);
-		}*/
+		}
 		if (!ft_strncmp(comand, "echo", size))
 			ft_echo(cmd->args);
 		else if (!ft_strncmp(comand, "pwd", size))
@@ -79,3 +82,4 @@ void ft_executer(t_cmd *cmd, char **env)
 	else
 		printf("Executável externo ainda não implementado: %s\n", cmd->args[0]);
 }
+*/
