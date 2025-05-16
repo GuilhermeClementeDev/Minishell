@@ -9,11 +9,12 @@ BUILTIN_DIR = builtins
 
 PARSING_DIR = parsing
 
+REDIRECT_DIR = redirects
+
 LIBFT = $(LIB_DIR)/libft.a
 
 SRCS = \
 	$(SRC_DIR)/main.c \
-	$(SRC_DIR)/utilits.c \
 	$(SRC_DIR)/$(PARSING_DIR)/verify_input.c \
 	$(SRC_DIR)/$(PARSING_DIR)/verify_input_utils.c \
 	$(SRC_DIR)/$(PARSING_DIR)/lexer.c \
@@ -23,6 +24,7 @@ SRCS = \
 	$(SRC_DIR)/$(PARSING_DIR)/parser_utils.c \
 	$(SRC_DIR)/$(PARSING_DIR)/var_expantion.c \
 	$(SRC_DIR)/$(PARSING_DIR)/var_expantion_utils.c \
+	$(SRC_DIR)/$(PARSING_DIR)/var_expantion_utils2.c \
 	$(SRC_DIR)/$(PARSING_DIR)/free_elements.c \
 	$(SRC_DIR)/$(PARSING_DIR)/prints.c \
 	$(SRC_DIR)/$(PARSING_DIR)/prints_utils.c \
@@ -32,6 +34,8 @@ SRCS = \
 	$(SRC_DIR)/$(BUILTIN_DIR)/builtins.c \
 	$(SRC_DIR)/$(BUILTIN_DIR)/builtins2.c \
 	$(SRC_DIR)/$(BUILTIN_DIR)/error.c \
+	$(SRC_DIR)/$(REDIRECT_DIR)/redirects.c \
+	../executor.c \
 
 OBJS = $(SRCS:.c=.o)
 

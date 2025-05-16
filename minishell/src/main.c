@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:36 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/14 17:33:35 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/05/15 22:33:32 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,28 @@ int	main(int argc, char **argv, char **envp)
 	(void)envp;
 	while (TRUE)
 	{
-		input = readline("minishell> ");
+		//input = readline("minishell> ");
+		input = "cat << EOF > b";
 		if (!input)
 			break ;
 		if (is_space_or_invalid(input))
 			continue ;
 		token_list = list_token(input);
 		cmd_list = parse_tokens(token_list);
-		print_cmds(&cmd_list);
+		//print_cmds(&cmd_list);
+		process_heredocs(cmd_list);
+		if (apply_redirects_to_all(cmd_list) == -1)
+		{
+			ft_putstr_fd("Error: failed to apply redirects\n", 2);
+			free_input_token_cmd(input, token_list, cmd_list);
+			input = NULL;
+			continue ;
+		}
+		execute_pipeline(cmd_list, &envp);
+		close_cmd_fds(cmd_list);
 		if (should_add_to_history(input))
 			add_history(input);
+
 		free_input_token_cmd(input, token_list, cmd_list);
 		input = NULL;
 	}
