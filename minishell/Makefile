@@ -6,7 +6,7 @@ CFLAGS = -Wall -Wextra -Werror -g
 SRC_DIR = src
 LIB_DIR = lib
 BUILTIN_DIR = builtins
-
+EXECUTION_DIR = executions
 PARSING_DIR = parsing
 
 LIBFT = $(LIB_DIR)/libft.a
@@ -32,6 +32,7 @@ SRCS = \
 	$(SRC_DIR)/$(BUILTIN_DIR)/builtins.c \
 	$(SRC_DIR)/$(BUILTIN_DIR)/builtins2.c \
 	$(SRC_DIR)/$(BUILTIN_DIR)/error.c \
+	$(SRC_DIR)/$(EXECUTION_DIR)/executor.c\
 
 OBJS = $(SRCS:.c=.o)
 

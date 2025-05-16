@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/15 18:13:37 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/15 22:24:48 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <linux/limits.h>
+# include <sys/wait.h>
 
 # define TRUE 1
 # define FALSE 0
@@ -155,5 +156,9 @@ void		ft_exit(char **args);
 //builtins2
 char		**ft_export(char **env, char *new_var);
 char		**ft_unset(char **env, char *to_remove);
+
+
+//executor
+void	ft_executer(t_cmd *cmd, char **env);
 
 #endif
