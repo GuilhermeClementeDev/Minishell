@@ -163,10 +163,11 @@ static void exec_external_cmd(t_cmd *cmd, char **envp)
     if (!exec_path)
     {
         ft_putstr_fd(cmd->args[0], 2);
-        ft_putstr_fd(": command not found\n", 2);
+        ft_putstr_fd(": command not found\n", 2);//dar free no exec path
         exit(127);
     }
     execve(exec_path, cmd->args, envp);
+
     perror("execve");
     free(exec_path);
     exit(EXIT_FAILURE);
