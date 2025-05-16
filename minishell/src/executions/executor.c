@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:19:25 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/15 23:52:33 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/15 23:54:42 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	ft_executer(t_shell *shell)
 	if (is_builtin(shell->cmds->args[0]))
 		execute_builtin(shell);
 	else
-		printf("Executável externo ainda não implementado: %s\n", shell->cmds->args[0]);
+		printf("Executável externo ainda não \
+		implementado: %s\n", shell->cmds->args[0]);
 }
 */
