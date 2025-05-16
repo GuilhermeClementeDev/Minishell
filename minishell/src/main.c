@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:36 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/15 22:08:41 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/15 23:22:16 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	main(int argc, char **argv, char **envp)
 		shell->cmds = parse_tokens(shell->tokens);
 		if (should_add_to_history(shell->input))
 			add_history(shell->input);
-		ft_executer(shell->cmds, shell->env);
+		ft_executer(shell);
 		ft_clean_shell(shell);
 	}
 	free_env(shell->env);
