@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:19:25 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/16 00:35:48 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/16 01:04:36 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,16 @@ void	execute_builtin(t_shell *shell)
 	}
 }
 
+void	execute_external_func(t_shell *shell)
+{
+	char	**paths;
+	char	*path_env;
+
+	path_env = get_env_value(shell->env, "PATH");
+	if (!path_env)
+		write(2,"No pathing",11);
+
+}
 
 void	ft_executer(t_shell *shell)
 {
@@ -82,6 +92,5 @@ void	ft_executer(t_shell *shell)
 	if (is_builtin(shell->cmds->args[0]))
 		execute_builtin(shell);
 	else
-		printf("Executável externo ainda não \
-		implementado: %s\n", shell->cmds->args[0]);
+		execute_external_func(shell);
 }
