@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/15 23:28:40 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/16 23:38:49 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int			count_env(char **env);
 char		**alloc_env(int entry_count);
 void		copy_env_skip(char **old_env, char **new_env, \
 char *skip, char *new_var);
-void		ft_new_env_pwds(char **envp);
+void		ft_new_env_pwds(t_shell *shell);
 
 //utilits_export
 int			is_valid_export(char *str);
@@ -150,7 +150,7 @@ void		free_env(char **env);
 void		ft_echo(char **str);
 void		ft_pwd(void);
 void		ft_env(char **envp);
-void		ft_cd(char **str, char **envp);
+void		ft_cd(t_shell *shell, char **str, char **envp);
 void		ft_exit(char **args);
 
 //builtins2

@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:46:09 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/16 22:53:50 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/17 00:33:46 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,32 @@ static void	ft_shlvl(t_shell *shell)
 		shell->env = ft_export(shell->env, "SHLVL=1");
 }
 
+static void	ft_env_pwd(t_shell	*shell)
+{
+	char	**new_env;
+	char	cwd[PATH_MAX];
+	char	*pwd;
+
+	getcwd(cwd, sizeof(cwd));
+	pwd = ft_strjoin("PWD=", cwd);
+	if (!get_env_value(shell->env, "PWD"))
+	{
+		new_env = alloc_env(count_env(shell->env) + 1);
+		copy_env_skip(shell->env, new_env, NULL, pwd);
+		free_env(shell->env);
+		shell->env = new_env;
+	}
+	else
+		ft_change_value(shell->env, pwd);
+	free(pwd);
+}
+
 void	ft_build_shell(t_shell *shell, char **envp)
 {
 	shell->env = alloc_env(count_env(envp));
 	copy_env_skip(envp, shell->env, NULL, NULL);
 	ft_shlvl(shell);
+	ft_env_pwd(shell);
 	shell->input = NULL;
 	shell->tokens = NULL;
 	shell->cmds = NULL;
