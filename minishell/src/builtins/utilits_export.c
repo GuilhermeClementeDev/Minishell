@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:06:49 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/15 18:24:54 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/17 18:42:48 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@ int	is_valid_export(char *str)
 	if (!str)
 		return (0);
 	while (str[i] && str[i] != '=')
+	{
+		if (str[i] == ' ' || str[i] == '\t')
+			return (0);
 		i++;
+	}
 	if (i == 0 || str[i] != '=')
 		return (0);
 	if (str[i - 1] == ' ')
