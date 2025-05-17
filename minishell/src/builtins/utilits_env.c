@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:09:42 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/15 18:19:32 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/16 18:12:46 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*get_env_value(char **envp, char *key)
 	int	j;
 
 	i = 0;
+	if (!envp)
+		return (NULL);
 	while (envp[i])
 	{
 		j = 0;

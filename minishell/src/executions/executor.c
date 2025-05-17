@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:19:25 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/16 01:04:36 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/16 19:42:29 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	execute_builtin(t_shell *shell)
 {
 	char	*command;
 	pid_t	pid;
-	int		status;
 
 	command = shell->cmds->args[0];
 	if (!ft_strncmp(command, "cd", 3))
@@ -45,7 +44,6 @@ void	execute_builtin(t_shell *shell)
 		pid = fork();
 		if (pid == 0)
 		{
-			// Aqui você pode tratar os redirecionamentos se necessário
 			/*
 			if (cmd->fd_out != 1)
 			{
@@ -68,21 +66,58 @@ void	execute_builtin(t_shell *shell)
 			exit(0);
 		}
 		else if (pid > 0)
-			waitpid(pid, &status, 0);
+			waitpid(pid, NULL, 0);
 		else
 			perror("fork");
 	}
 }
-
-void	execute_external_func(t_shell *shell)
+char	*find_cmd_path(t_shell *shell)
 {
 	char	**paths;
 	char	*path_env;
+	int		i;
 
+	i = 0;
 	path_env = get_env_value(shell->env, "PATH");
 	if (!path_env)
-		write(2,"No pathing",11);
+		return (NULL);
+	paths = ft_split(path_env, ':');
+	while (paths[i])
+	{
+		path_env = ft_strjoin(paths[i], "/");
+		path_env = ft_join_gnl(path_env, shell->cmds->args[0]);
+		if (access(path_env, X_OK) == 0)
+		{
+			free_env(paths);
+			return (path_env);
+		}
+		free(path_env);
+		i++;
+	}
+	free_env(paths);
+	return (NULL);
+}
+void	execute_external_func(t_shell *shell)
+{
+	char	*path;
+	pid_t	pid;
 
+	path = find_cmd_path(shell);
+	if (!path)
+	{
+		ft_putstr_fd("-bash: ", 2);
+		ft_putstr_fd(shell->cmds->args[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+		return ;
+	}
+	pid = fork();
+	if (pid == 0)
+		execve(path, shell->cmds->args, shell->env);
+	else if (pid > 0)
+		waitpid(pid, NULL, 0);
+	else
+		perror("fork");
+	free(path);
 }
 
 void	ft_executer(t_shell *shell)
