@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirects.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:39:19 by bieldojt          #+#    #+#             */
-/*   Updated: 2025/05/16 16:04:16 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/05/18 01:05:48 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,11 @@ char *create_heredoc_file(char *delimiter)
 }
 
 // Processa os heredocs, cria os arquivos temporários e atualiza redir->filename
-void process_heredocs(t_cmd *cmd_list)
+void	process_heredocs(t_cmd *cmd_list)
 {
-	t_cmd *cmd;
-	t_redirect *redir;
-	char *tmp_file;
+	t_cmd		*cmd;
+	t_redirect	*redir;
+	char		*tmp_file;
 
 	cmd = cmd_list;
 	while (cmd)
@@ -88,14 +88,14 @@ void process_heredocs(t_cmd *cmd_list)
 		{
 			if (redir->type == T_HEREDOC)
 			{
-				// Cria o arquivo temporário para o heredoc
 				tmp_file = create_heredoc_file(redir->filename);
 				if (!tmp_file)
 				{
 					cmd->redirect_error = 1;
 					return ;
 				}
-				// Atualiza redir->filename com o nome do arquivo temporário gerado
+				if (redir->filename)
+					free(redir->filename);
 				redir->filename = tmp_file;
 			}
 			redir = redir->next;
@@ -172,16 +172,17 @@ int	apply_redirects_to_all(t_cmd *cmd_list)
 	return (ret);
 }
 
-void	prepare_execution(t_cmd *cmd_list)
+int	prepare_execution(t_cmd *cmd_list)
 {
 	if (apply_redirects_to_all(cmd_list) == -1)
 	{
 		ft_putstr_fd("Error: failed to apply redirects\n", 2);
-		return ;
+		return (0);
 	}
 	if (setup_pipes(cmd_list) == -1)
 	{
 		ft_putstr_fd("Error: failed to create pipes\n", 2);
-		return ;
+		return (0);
 	}
+	return (1);
 }

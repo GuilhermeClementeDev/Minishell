@@ -163,13 +163,16 @@ static void exec_external_cmd(t_cmd *cmd, char **envp)
     if (!exec_path)
     {
         ft_putstr_fd(cmd->args[0], 2);
-        ft_putstr_fd(": command not found\n", 2);//dar free no exec path
+        ft_putstr_fd(": command not found\n", 2);
+        free(exec_path); // adicionar esta linha!
         exit(127);
     }
     execve(exec_path, cmd->args, envp);
 
+    // Se execve falhar:
     perror("execve");
     free(exec_path);
+    free_commands(cmd); // ← liberar antes de exit
     exit(EXIT_FAILURE);
 }
 
@@ -192,7 +195,10 @@ static void execute_single_command(t_cmd *cmd, char ***envp)
     }
 
     if (exec_builtin_child(cmd, *envp))
-        exit(0);
+    {
+    	free_commands(cmd); // ← libera apenas o comando atual
+    	exit(0);
+    }
 
     exec_external_cmd(cmd, *envp);
 }

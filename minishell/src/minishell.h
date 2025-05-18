@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/16 15:43:05 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/05/17 21:35:12 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,9 +149,9 @@ char		**ft_export(char **env, char *new_var);
 char		**ft_unset(char **env, char *to_remove);
 
 //redirects
-void process_heredocs(t_cmd *cmd_list);
-void	prepare_execution(t_cmd *cmd_list);
-int	apply_redirects_to_all(t_cmd *cmd_list);
+void		process_heredocs(t_cmd *cmd_list);
+int			prepare_execution(t_cmd *cmd_list);
+int			apply_redirects_to_all(t_cmd *cmd_list);
 
 //executor
 void	execute_pipeline(t_cmd *cmd_list, char ***envp);
