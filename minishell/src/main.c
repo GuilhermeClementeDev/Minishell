@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:36 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/17 00:34:08 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/18 12:37:35 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	main(int argc, char **argv, char **envp)
 	ft_build_shell(shell, envp);
 	while (TRUE)
 	{
+		ft_signals();
 		shell->input = readline("minishell> ");
 		if (!shell->input)
 			break ;

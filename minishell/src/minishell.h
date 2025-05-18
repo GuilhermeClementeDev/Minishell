@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/16 23:38:49 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/18 12:44:54 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <readline/history.h>
 # include <linux/limits.h>
 # include <sys/wait.h>
+#include <signal.h>
+
 
 # define TRUE 1
 # define FALSE 0
@@ -159,5 +161,8 @@ char		**ft_unset(char **env, char *to_remove);
 
 //executor
 void		ft_executer(t_shell *shell);
+
+// signals
+void	ft_signals(void);
 
 #endif
