@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/17 21:35:12 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/05/19 14:44:57 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,21 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }	t_cmd;
 
+typedef struct s_shell
+{
+	char		*input;
+	t_token		*tokens;
+	t_cmd		*cmds;
+	char		**env;
+}	t_shell;
+
+//main
 int			ft_not_only_spaces(char *str);
+void		free_input_token_cmd(char* input, t_cmd *cmd_list);
+
+//utilits_main
+void		ft_build_shell(t_shell *shell, char **envp);
+void		ft_clean_shell(t_shell *shell);
 
 //verify_input.c
 int			verify_quotes(const char *str);
@@ -127,6 +141,7 @@ int			count_env(char **env);
 char		**alloc_env(int entry_count);
 void		copy_env_skip(char **old_env, char **new_env, \
 char *skip, char *new_var);
+void		ft_new_env_pwds(char **envp);
 
 //utilits_export
 int			is_valid_export(char *str);

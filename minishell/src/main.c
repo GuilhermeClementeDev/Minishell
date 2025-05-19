@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:36 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/18 00:36:29 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/05/19 14:48:34 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,9 @@ t_token	*list_token(char *input)
 	return (token_list);
 }
 
-void	free_input_token_cmd(t_cmd *cmd_list)
+void	free_input_token_cmd(char* input, t_cmd *cmd_list)
 {
-	//free(input);
-	//free_token_list(token_list);
+	free(input);
 	free_commands(cmd_list);
 }
 
@@ -34,11 +33,13 @@ int	is_space_or_invalid(char *input)
 	if (!ft_not_only_spaces(input))
 	{
 		free(input);
+		input = NULL;
 		return (1);
 	}
 	if (check_syntax_error(input))
 	{
 		free(input);
+		input = NULL;
 		return (1);
 	}
 	return (0);
@@ -55,41 +56,36 @@ static int	should_add_to_history(char *str)
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*input;
-	t_token	*token_list;
-	t_cmd	*cmd_list;
+	t_shell	*shell;
 
+	shell = malloc(sizeof(t_shell));
 	(void)argc;
 	(void)argv;
-	(void)envp;
+	ft_build_shell(shell, envp);
 	while (TRUE)
 	{
-		input = readline("minishell> ");
-		//input = "cat << EOF > b";
-		if (!input)
+		shell->input = readline("minishell> ");
+		if (!shell->input)
 			break ;
-		if (is_space_or_invalid(input))
+		if (is_space_or_invalid(shell->input))
 			continue ;
-		token_list = list_token(input);
-		cmd_list = parse_tokens(token_list);
-		free_token_list(token_list);
-		//print_cmds(&cmd_list);
-		process_heredocs(cmd_list);
-		if (!prepare_execution(cmd_list))
+		shell->tokens = list_token(shell->input);
+		shell->cmds = parse_tokens(shell->tokens);
+		free_token_list(shell->tokens);
+		process_heredocs(shell->cmds);
+		if (!prepare_execution(shell->cmds))
 		{
-			free_input_token_cmd(cmd_list);
-			free(input);
-			input = NULL;
+			ft_clean_shell(shell);
 			continue ;
 		}
-		execute_pipeline(cmd_list, &envp);
-		close_cmd_fds(cmd_list);
-		free_input_token_cmd(cmd_list);
-		if (should_add_to_history(input))
-			add_history(input);
-		free(input);
-		input = NULL;
+		execute_pipeline(shell->cmds, &shell->env);
+		close_cmd_fds(shell->cmds);
+		if (should_add_to_history(shell->input))
+			add_history(shell->input);
+		ft_clean_shell(shell);
 	}
+	free_env(shell->env);
+	free(shell);
 	clear_history();
 	return (0);
 }

@@ -6,7 +6,7 @@ CFLAGS = -Wall -Wextra -Werror -g
 SRC_DIR = src
 LIB_DIR = lib
 BUILTIN_DIR = builtins
-
+EXECUTION_DIR = executions
 PARSING_DIR = parsing
 
 REDIRECT_DIR = redirects
@@ -15,6 +15,7 @@ LIBFT = $(LIB_DIR)/libft.a
 
 SRCS = \
 	$(SRC_DIR)/main.c \
+	$(SRC_DIR)/utilits_main.c \
 	$(SRC_DIR)/$(PARSING_DIR)/verify_input.c \
 	$(SRC_DIR)/$(PARSING_DIR)/verify_input_utils.c \
 	$(SRC_DIR)/$(PARSING_DIR)/lexer.c \
