@@ -53,6 +53,10 @@ $(NAME): $(OBJS) $(LIBFT)
 $(LIBFT):
 	@make -C $(LIB_DIR)
 
+run:
+	@clear
+	valgrind --track-fds=yes --suppressions=valgrind.supp --leak-check=full --show-leak-kinds=all ./$(NAME)
+
 clean:
 	@make -C $(LIB_DIR) clean
 	@rm -f $(OBJS)

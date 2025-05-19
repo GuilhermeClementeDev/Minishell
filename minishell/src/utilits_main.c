@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utilits_main.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
+/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:46:09 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/15 18:14:09 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/19 14:44:22 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_build_shell(t_shell *shell, char **envp)
 
 void	ft_clean_shell(t_shell *shell)
 {
-	free_input_token_cmd(shell->input, shell->tokens, shell->cmds);
+	free_input_token_cmd(shell->input, shell->cmds);
 	shell->input = NULL;
 	shell->tokens = NULL;
 	shell->cmds = NULL;

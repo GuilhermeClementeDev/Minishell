@@ -6,7 +6,7 @@
 /*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:36 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/19 14:48:34 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:11:17 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		shell->tokens = list_token(shell->input);
 		shell->cmds = parse_tokens(shell->tokens);
+		print_cmds(&shell->cmds);
 		free_token_list(shell->tokens);
 		process_heredocs(shell->cmds);
 		if (!prepare_execution(shell->cmds))
@@ -83,6 +84,7 @@ int	main(int argc, char **argv, char **envp)
 		if (should_add_to_history(shell->input))
 			add_history(shell->input);
 		ft_clean_shell(shell);
+		break; //para verificar leak
 	}
 	free_env(shell->env);
 	free(shell);
