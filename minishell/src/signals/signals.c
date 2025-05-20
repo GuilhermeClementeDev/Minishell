@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 12:38:02 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/18 12:44:34 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/20 16:16:17 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,5 @@ void	sigint_handler(int sig)
 void	ft_signals(void)
 {
 	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
 }
