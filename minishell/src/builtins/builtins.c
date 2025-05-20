@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 16:56:02 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/20 15:29:29 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:43:39 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,10 @@ void	ft_exit(t_shell *shell)
 
 	status = 0;
 	i = 0;
-	str = shell->cmds->args[1];
+	if (shell->cmds)
+		str = shell->cmds->args[1];
+	else
+		str = NULL;
 	while (str && str[i] && ft_isdigit(str[i]))
 		i++;
 	ft_putstr_fd("exit\n", 1);
@@ -99,7 +102,6 @@ void	ft_exit(t_shell *shell)
 		ft_putstr_fd(": numeric argument required\n", 2);
 		status = 2;
 	}
-	ft_clean_shell(shell);
 	free_env(shell->env);
 	free(shell);
 	clear_history();
