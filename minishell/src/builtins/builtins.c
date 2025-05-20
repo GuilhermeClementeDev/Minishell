@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 16:56:02 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/17 00:34:25 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:29:29 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,31 @@ void	ft_cd(t_shell *shell, char **str, char **envp)
 	}
 }
 
-void	ft_exit(char **args)
+void	ft_exit(t_shell *shell)
 {
-	int	status;
+	int		status;
+	char	*str;
+	int		i;
 
 	status = 0;
-	if (args[1])
-		status = ft_atoi(args[1]);
-	printf("exit\n");
+	i = 0;
+	str = shell->cmds->args[1];
+	while (str && str[i] && ft_isdigit(str[i]))
+		i++;
+	ft_putstr_fd("exit\n", 1);
+	if (str && str[i] == '\0')
+		status = ft_atoi(str);
+	else if (str)
+	{
+		ft_putstr_fd("bash: exit: : ", 2);
+		ft_putstr_fd(str,2);
+		ft_putstr_fd(": numeric argument required\n", 2);
+		status = 2;
+	}
+	ft_clean_shell(shell);
+	free_env(shell->env);
+	free(shell);
+	clear_history();
 	exit(status);
 }
 /* //echo

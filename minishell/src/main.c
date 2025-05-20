@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:36 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/18 12:37:35 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/20 14:52:04 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_signals();
 		shell->input = readline("minishell> ");
 		if (!shell->input)
-			break ;
+			ft_exit(shell);
 		if (is_space_or_invalid(shell->input))
 			continue ;
 		shell->tokens = list_token(shell->input);

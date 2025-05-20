@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:19:25 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/16 23:36:19 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/20 14:55:20 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	execute_builtin(t_shell *shell)
 	if (!ft_strncmp(command, "cd", 3))
 		ft_cd(shell ,shell->cmds->args, shell->env);
 	else if (!ft_strncmp(command, "exit", 5))
-		ft_exit(shell->cmds->args);
+		ft_exit(shell);
 	else if (!ft_strncmp(command, "export", 7))
 		shell->env = ft_export(shell->env, shell->cmds->args[1]);
 	else if (!ft_strncmp(command, "unset", 6))
