@@ -36,6 +36,10 @@ SRCS = \
 	$(SRC_DIR)/$(BUILTIN_DIR)/builtins2.c \
 	$(SRC_DIR)/$(BUILTIN_DIR)/error.c \
 	$(SRC_DIR)/$(REDIRECT_DIR)/redirects.c \
+	$(SRC_DIR)/$(REDIRECT_DIR)/redirects_utils.c \
+	$(SRC_DIR)/$(REDIRECT_DIR)/pipes.c \
+	$(SRC_DIR)/$(REDIRECT_DIR)/heredoc.c \
+	$(SRC_DIR)/$(REDIRECT_DIR)/heredoc_utils.c \
 	../executor.c \
 
 OBJS = $(SRCS:.c=.o)

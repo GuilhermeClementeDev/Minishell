@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/19 14:44:57 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/05/21 16:14:08 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,14 @@ typedef struct s_shell
 
 //main
 int			ft_not_only_spaces(char *str);
-void		free_input_token_cmd(char* input, t_cmd *cmd_list);
+void		free_input_token_cmd(char *input, t_cmd *cmd_list);
 
 //utilits_main
 void		ft_build_shell(t_shell *shell, char **envp);
 void		ft_clean_shell(t_shell *shell);
+int			is_space_or_invalid(char *input);
+t_token		*list_token(char *input);
+void		free_input_token_cmd(char *input, t_cmd *cmd_list);
 
 //verify_input.c
 int			verify_quotes(const char *str);
@@ -163,13 +166,27 @@ void		ft_exit(char **args);
 char		**ft_export(char **env, char *new_var);
 char		**ft_unset(char **env, char *to_remove);
 
+//pipes.c
+int			setup_pipes(t_cmd *cmd_list);
+
 //redirects
 void		process_heredocs(t_cmd *cmd_list);
 int			prepare_execution(t_cmd *cmd_list);
 int			apply_redirects_to_all(t_cmd *cmd_list);
 
+//redirects_utils.c
+void		change_cmd_fd(t_cmd *cmd, t_redirect *redir, int fd);
+int			open_fd_redir(t_redirect *redir, int *fd);
+void		verify_fd_cmd(t_cmd *cmd, t_redirect *r, int fd, int *error);
+
+//heredoc.c
+void		process_heredocs(t_cmd *cmd_list);
+
+//heredoc_utils.c
+char		*create_heredoc_file(char *delimiter);
+
 //executor
-void	execute_pipeline(t_cmd *cmd_list, char ***envp);
-void	close_cmd_fds(t_cmd *cmd_list);
+void		execute_pipeline(t_cmd *cmd_list, char ***envp);
+void		close_cmd_fds(t_cmd *cmd_list);
 
 #endif
