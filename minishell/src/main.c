@@ -3,47 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
+/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:36 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/15 23:22:16 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/21 16:13:45 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*list_token(char *input)
+void	token_and_parse(t_shell *shell)
 {
-	t_token	*token_list;
-
-	token_list = lexer(input);
-	expand_variables_in_token(token_list);
-	clean_tokens(token_list);
-	return (token_list);
+	shell->tokens = list_token(shell->input);
+	shell->cmds = parse_tokens(shell->tokens);
+	print_cmds(&shell->cmds);
+	free_token_list(shell->tokens);
 }
 
-void	free_input_token_cmd(char *input, t_token *token_list, t_cmd *cmd_list)
+int	execution(t_shell *shell)
 {
-	free(input);
-	free_token_list(token_list);
-	free_commands(cmd_list);
-}
-
-int	is_space_or_invalid(char *input)
-{
-	if (!ft_not_only_spaces(input))
+	process_heredocs(shell->cmds);
+	if (!prepare_execution(shell->cmds))
 	{
-		free(input);
-		input = NULL;
-		return (1);
+		ft_clean_shell(shell);
+		return (0);
 	}
-	if (check_syntax_error(input))
-	{
-		free(input);
-		input = NULL;
-		return (1);
-	}
-	return (0);
+	execute_pipeline(shell->cmds, &shell->env);
+	close_cmd_fds(shell->cmds);
+	return (1);
 }
 
 static int	should_add_to_history(char *str)
@@ -70,11 +57,11 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		if (is_space_or_invalid(shell->input))
 			continue ;
-		shell->tokens = list_token(shell->input);
-		shell->cmds = parse_tokens(shell->tokens);
+		token_and_parse(shell);
+		if (!execution(shell))
+			continue ;
 		if (should_add_to_history(shell->input))
 			add_history(shell->input);
-		ft_executer(shell);
 		ft_clean_shell(shell);
 	}
 	free_env(shell->env);

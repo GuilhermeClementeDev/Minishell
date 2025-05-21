@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
+/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/15 23:28:40 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/21 16:14:08 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <fcntl.h>
 # include <linux/limits.h>
 # include <sys/wait.h>
 
@@ -49,6 +50,9 @@ typedef struct s_cmd
 {
 	char			**args;
 	t_redirect		*redirects;
+	int				fd_in;
+	int				fd_out;
+	int				redirect_error;
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -62,12 +66,14 @@ typedef struct s_shell
 
 //main
 int			ft_not_only_spaces(char *str);
-void		free_input_token_cmd(char *input, \
-	t_token *token_list, t_cmd *cmd_list);
+void		free_input_token_cmd(char *input, t_cmd *cmd_list);
 
 //utilits_main
 void		ft_build_shell(t_shell *shell, char **envp);
 void		ft_clean_shell(t_shell *shell);
+int			is_space_or_invalid(char *input);
+t_token		*list_token(char *input);
+void		free_input_token_cmd(char *input, t_cmd *cmd_list);
 
 //verify_input.c
 int			verify_quotes(const char *str);
@@ -110,14 +116,17 @@ void		free_commands(t_cmd *cmds);
 
 //var_expansion.c
 void		expand_variables_in_token(t_token *token);
-char		*expand_variable(const char *input, int *index);
+char		*expand_variable(char *input, int *index);
 
 //var_expansion_utils.c
-int			quoted_part(const char *input, int *i, char **expanded_str);
-int			var_expansion(const char *input, int *i, char **expanded_str);
-int			handle_normal_char(const char *input, int *i, char **expand_str);
+int			quoted_part(char *input, int *i, char **expanded_str);
+int			var_expansion(char *input, int *i, char **expanded_str);
+int			handle_normal_char(char *input, int *i, char **expand_str);
 char		*initialize_expanded_str(void);
-int			quotes_or_expansion(char **exp_str, const char *input, int *i);
+
+//var_expansion_utils2.c
+void		expand_variables_in_str(char **str, char *input);
+int			quotes_or_expansion(char **exp_str, char *input, int *i);
 
 //prints.c
 void		print_tokens(t_token **head);
@@ -157,7 +166,27 @@ void		ft_exit(char **args);
 char		**ft_export(char **env, char *new_var);
 char		**ft_unset(char **env, char *to_remove);
 
+//pipes.c
+int			setup_pipes(t_cmd *cmd_list);
+
+//redirects
+void		process_heredocs(t_cmd *cmd_list);
+int			prepare_execution(t_cmd *cmd_list);
+int			apply_redirects_to_all(t_cmd *cmd_list);
+
+//redirects_utils.c
+void		change_cmd_fd(t_cmd *cmd, t_redirect *redir, int fd);
+int			open_fd_redir(t_redirect *redir, int *fd);
+void		verify_fd_cmd(t_cmd *cmd, t_redirect *r, int fd, int *error);
+
+//heredoc.c
+void		process_heredocs(t_cmd *cmd_list);
+
+//heredoc_utils.c
+char		*create_heredoc_file(char *delimiter);
+
 //executor
-void		ft_executer(t_shell *shell);
+void		execute_pipeline(t_cmd *cmd_list, char ***envp);
+void		close_cmd_fds(t_cmd *cmd_list);
 
 #endif

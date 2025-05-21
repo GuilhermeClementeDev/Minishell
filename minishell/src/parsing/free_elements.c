@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_elements.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:23:38 by gda-conc          #+#    #+#             */
-/*   Updated: 2025/05/14 13:48:11 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/05/18 00:33:28 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	free_redirects(t_redirect *redirects)
 	while (redirects)
 	{
 		tmp = redirects->next;
+		if (redirects->type == T_HEREDOC)
+			unlink(redirects->filename);
 		free(redirects->filename);
 		free(redirects);
 		redirects = tmp;
@@ -50,7 +52,10 @@ void	free_commands(t_cmd *cmds)
 		{
 			i = 0;
 			while (cmds->args[i])
-				free(cmds->args[i++]);
+			{
+				free(cmds->args[i]);
+				i++;
+			}
 			free(cmds->args);
 		}
 		free_redirects(cmds->redirects);
