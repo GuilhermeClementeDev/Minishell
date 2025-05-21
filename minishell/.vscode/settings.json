@@ -1,6 +1,7 @@
 {
 	"conventionalCommits.scopes": [
-		"parsing"
+		"parsing",
+		"redirects and pipes"
 	],
 	"files.associations": {
 		"stdlib.h": "c"
