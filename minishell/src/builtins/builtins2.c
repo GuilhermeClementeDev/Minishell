@@ -6,30 +6,36 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:17:20 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/15 23:05:14 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:27:27 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	**ft_export(char **env, char *new_var)
+char	**ft_export(char **env, char **new_var)
 {
-	int		count;
 	char	**new_env;
-	char	*no_spaces;
+	char	**tmp;
+	int		i;
 
-	if (!is_valid_export(new_var))
-		return (env);
-	if (ft_change_value(env, new_var))
-		return (env);
-	count = count_env(env) + 1;
-	new_env = alloc_env(count);
-	if (!new_env)
-		return (env);
-	no_spaces = ft_no_spaces(new_var);
-	copy_env_skip(env, new_env, NULL, no_spaces);
-	free(no_spaces);
-	free_env(env);
+	i = 1;
+	new_env = env;
+	if (!new_var[i])
+		ft_print_export(env);
+	while (new_var[i])
+	{
+		if (is_valid_export(new_var[i]))
+		{
+			if (!ft_change_value(new_env, new_var[i]))
+			{
+				tmp = alloc_env(count_env(new_env) + 1);
+				copy_env_skip(new_env, tmp, NULL, new_var[i]);
+				free_env(new_env);
+				new_env = tmp;
+			}
+		}
+		i++;
+	}
 	return (new_env);
 }
 

@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/20 14:53:09 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:31:18 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@
 # include <readline/history.h>
 # include <linux/limits.h>
 # include <sys/wait.h>
-#include <signal.h>
-
+# include <signal.h>
 
 # define TRUE 1
 # define FALSE 0
@@ -141,12 +140,14 @@ void		ft_new_env_pwds(t_shell *shell);
 
 //utilits_export
 int			is_valid_export(char *str);
-char		*ft_no_spaces(char *str);
 int			ft_change_value(char **env, char *new_var);
+char		**single_var(char *var);
+void		ft_print_export(char **env);
 
 //error
 void		ft_error(char *str, int n);
 void		free_env(char **env);
+void		print_error(char *cmd, char *str, char *msg);
 
 //builtins1
 void		ft_echo(char **str);
@@ -156,13 +157,13 @@ void		ft_cd(t_shell *shell, char **str, char **envp);
 void		ft_exit(t_shell *shell);
 
 //builtins2
-char		**ft_export(char **env, char *new_var);
+char		**ft_export(char **env, char **new_var);
 char		**ft_unset(char **env, char *to_remove);
 
 //executor
 void		ft_executer(t_shell *shell);
 
 // signals
-void	ft_signals(void);
+void		ft_signals(void);
 
 #endif

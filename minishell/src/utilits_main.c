@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:46:09 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/17 00:33:46 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:27:13 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void	ft_shlvl(t_shell *shell)
 	int		shlvl_int;
 	char	*shlvl_str;
 	char	*tmp;
+	char	**vars;
 
 	shlvl_int = ft_check_shlvl(shell->env);
 	if (shlvl_int)
@@ -45,7 +46,14 @@ static void	ft_shlvl(t_shell *shell)
 		free(tmp);
 	}
 	else
-		shell->env = ft_export(shell->env, "SHLVL=1");
+	{
+		vars = single_var("SHLVL=1");
+		if (vars)
+		{
+			shell->env = ft_export(shell->env, vars);
+			free(vars);
+		}
+	}
 }
 
 static void	ft_env_pwd(t_shell	*shell)

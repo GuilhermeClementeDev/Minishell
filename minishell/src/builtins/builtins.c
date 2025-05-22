@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 16:56:02 by guclemen          #+#    #+#             */
-	/*   Updated: 2025/05/20 15:43:39 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:32:58 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,7 @@ void	ft_exit(t_shell *shell)
 		status = ft_atoi(str);
 	else if (str)
 	{
-		ft_putstr_fd("bash: exit: : ", 2);
-		ft_putstr_fd(str,2);
-		ft_putstr_fd(": numeric argument required\n", 2);
+		print_error("exit", str, "numeric argument required");
 		status = 2;
 	}
 	free_env(shell->env);
