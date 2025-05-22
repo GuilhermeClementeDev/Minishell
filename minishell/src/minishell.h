@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/22 16:40:08 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/22 18:38:00 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ const char	*redir_type_to_str(int type);
 int			ft_not_only_spaces(char *str);
 int			is_env_skip_match(char *env_var, char *skip);
 int			get_env_variable(char **env, char *key);
-
+char		*ft_full_path(char *current_pwd, char *goal);
 
 //utilits_env
 char		*get_env_value(char **envp, char *key);

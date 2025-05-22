@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 11:15:18 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/22 16:20:54 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:14:53 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,34 +60,49 @@ int	is_env_skip_match(char *env_var, char *skip)
 		return (0);
 	return (1);
 }
-/*
-char	*ft_absolute_path(char *current_pwd, char *target)
+static char	*ft_build_path(char **separated)
 {
-	char	*joined;
-	char	**parts;
-	char	**resolved;
-	int		i, j;
+	char	*absolute_path;
+	int		i;
 
-	if (target[0] == '/')
-		return (ft_strdup(target));
-
-	joined = ft_strjoin(current_pwd, "/");
-	joined = strjoin_free(joined, target);
-	parts = ft_split(joined, '/');
-	resolved = malloc(sizeof(char *) * (count_strings(parts) + 1));
 	i = 0;
-	j = 0;
-	while (parts[i])
+	absolute_path = ft_strdup("/");
+	while(separated[i])
 	{
-		if (ft_strcmp(parts[i], "..") == 0 && j > 0)
-			j--; // sobe um diretório
-		else if (ft_strcmp(parts[i], ".") != 0 && ft_strlen(parts[i]) > 0)
-			resolved[j++] = ft_strdup(parts[i]);
+		absolute_path = ft_join_gnl(absolute_path, separated[i]);
+		if (separated[i + 1])
+			absolute_path = ft_join_gnl(absolute_path, "/");
 		i++;
 	}
-	resolved[j] = NULL;
-	free(joined);
-	free_split(parts);
-	return (join_path(resolved));
+	free_env(separated);
+	return (absolute_path);
 }
-*/
+
+char	*ft_full_path(char *current_pwd, char *goal)
+{
+	char	*path;
+	char	**separated;
+	char	**path_helper;
+	int		i;
+	int		last;
+
+	i = 0;
+	last = 0;
+	path = ft_strjoin(current_pwd, "/");
+	path = ft_join_gnl(path, goal);
+	separated = ft_split(path, '/');
+	free(goal);
+	free(path);
+	path_helper = malloc(sizeof(char *) * (count_env((separated)) + 1));
+	while (separated[i])
+	{
+		if (ft_strncmp(separated[i], "..", ft_strlen(separated[i])) == 0 && last > 0)
+			free(path_helper[--last]);
+		else if (ft_strncmp(separated[i], ".", ft_strlen(separated[i])) != 0 && ft_strncmp(separated[i], "", ft_strlen(separated[i])) != 0)
+			path_helper[last++] = ft_strdup(separated[i]);
+		i++;
+	}
+	path_helper[last] = NULL;
+	free_env(separated);
+	return (ft_build_path(path_helper));
+}

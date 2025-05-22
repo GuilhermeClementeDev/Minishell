@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 16:56:02 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/22 16:20:37 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:14:39 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,21 +60,25 @@ void	ft_env(char **envp)
 
 void	ft_cd(t_shell *shell, char **str, char **envp)
 {
-	const char	*path;
+	char	*path;
+	char	cwd[PATH_MAX];
 
 	if (str[1])
-		path = str[1];
+		path = ft_strdup(str[1]);
 	else
-		path = get_env_value(envp, "HOME");
+		path = ft_strdup(get_env_value(envp, "HOME"));
 	if (!path)
 		print_error("cd", NULL, "HOME not set");
 	if (path)
 	{
+		if (path[0] != '/')
+			path = ft_full_path(getcwd(cwd, sizeof(cwd)), path);
 		if (chdir(path) != 0)
 			print_error("cd", (char *)path, "No such file or directory");
 		else
 			ft_new_env_pwds(shell);
 	}
+	free(path);
 }
 
 void	ft_exit(t_shell *shell)
