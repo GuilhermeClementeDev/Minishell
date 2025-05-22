@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:46:09 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/22 11:27:13 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/22 14:33:52 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,21 @@ static void	ft_env_pwd(t_shell	*shell)
 
 	getcwd(cwd, sizeof(cwd));
 	pwd = ft_strjoin("PWD=", cwd);
-	if (!get_env_value(shell->env, "PWD"))
+	if (!get_env_variable(shell->env, "PWD"))
 	{
-		new_env = alloc_env(count_env(shell->env) + 1);
-		copy_env_skip(shell->env, new_env, NULL, pwd);
-		free_env(shell->env);
-		shell->env = new_env;
+		new_env = single_var(pwd);
+		shell->env = ft_export(shell->env, new_env);
+		free(new_env);
 	}
 	else
 		ft_change_value(shell->env, pwd);
 	free(pwd);
+	if (!get_env_variable(shell->env, "OLDPWD"))
+	{
+		new_env = single_var("OLDPWD");
+		shell->env = ft_export(shell->env, new_env);
+		free(new_env);
+	}
 }
 
 void	ft_build_shell(t_shell *shell, char **envp)
