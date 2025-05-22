@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 16:56:02 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/22 12:20:37 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/22 14:48:50 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,7 @@ void	ft_cd(t_shell *shell, char **str, char **envp)
 	if (path)
 	{
 		if (chdir(path) != 0)
-		{
-			ft_putstr_fd ("-minishell: cd: ", 2);
-			ft_putstr_fd ((char *)path, 2);
-			ft_putstr_fd (": No such file or directory\n", 2);
-		}
+			print_error("cd", (char *)path, "No such file or directory");
 		else
 			ft_new_env_pwds(shell);
 	}

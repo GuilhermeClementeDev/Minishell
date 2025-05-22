@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:09:42 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/22 13:28:27 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:23:19 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,27 +81,26 @@ void	ft_new_env_pwds(t_shell *shell)
 {
 	char	cwd[PATH_MAX];
 	char	*old_pwd;
-	char	**new_env;
+	int		old_pwd_exists;
+	int		pwd_exists;
 
+	old_pwd_exists = get_env_variable(shell->env, "OLDPWD");
+	pwd_exists = get_env_variable(shell->env, "PWD");
 	old_pwd = get_env_value(shell->env, "PWD");
-	if (!old_pwd && !get_env_value(shell->env, "OLDPWD"))
+	if (!old_pwd && !old_pwd_exists && !pwd_exists)
 		return ;
 	else if (!old_pwd)
 		old_pwd = ft_strjoin("OLDPWD=", "");
 	else
 		old_pwd = ft_strjoin("OLDPWD=", old_pwd);
-	if (get_env_value(shell->env, "OLDPWD"))
+	if (old_pwd_exists)
 		ft_change_value(shell->env, old_pwd);
-	else
-	{
-		new_env = alloc_env(count_env(shell->env) + 1);
-		copy_env_skip(shell->env, new_env, NULL, old_pwd);
-		free_env(shell->env);
-		shell->env = new_env;
-	}
 	free(old_pwd);
-	getcwd(cwd, sizeof(cwd));
-	old_pwd = ft_strjoin("PWD=", cwd);
-	ft_change_value(shell->env, old_pwd);
+	if (pwd_exists)
+	{
+		getcwd(cwd, sizeof(cwd));
+		old_pwd = ft_strjoin("PWD=", cwd);
+		ft_change_value(shell->env, old_pwd);
+	}
 	free(old_pwd);
 }
