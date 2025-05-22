@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:09:42 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/17 00:54:21 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/22 13:28:27 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	copy_env_skip(char **old_env, char **new_env, char *skip, char *new_var)
 	k = 0;
 	while (old_env[i])
 	{
-		if (skip && ft_strnstr(old_env[i], skip, ft_strlen(skip)))
+		if (skip && is_env_skip_match(old_env[i], skip))
 		{
 			if (new_var)
 				new_env[k++] = ft_strdup(new_var);

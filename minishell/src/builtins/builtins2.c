@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:17:20 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/22 11:27:27 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/22 13:40:02 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,25 @@ char	**ft_export(char **env, char **new_var)
 	return (new_env);
 }
 
-char	**ft_unset(char **env, char *to_remove)
+char	**ft_unset(char **env, char **to_remove)
 {
-	int		count;
 	char	**new_env;
+	char	**tmp;
+	int		i;
 
-	if (!get_env_value(env, to_remove))
-		return (env);
-	count = count_env(env) - 1;
-	new_env = alloc_env(count);
-	if (!new_env)
-		return (env);
-	copy_env_skip(env, new_env, to_remove, NULL);
-	free_env(env);
+	i = 1;
+	new_env = env;
+	while (to_remove[i])
+	{
+		if (get_env_variable(new_env, to_remove[i]))
+		{
+			tmp = alloc_env(count_env(new_env) - 1);
+			copy_env_skip(new_env, tmp, to_remove[i], NULL);
+			free_env(new_env);
+			new_env = tmp;
+		}
+		i++;
+	}
 	return (new_env);
 }
 /*

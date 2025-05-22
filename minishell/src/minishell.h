@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/22 11:31:18 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/22 13:35:02 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,9 @@ const char	*token_type_to_str(int type);
 const char	*redir_type_to_str(int type);
 //utilits
 int			ft_not_only_spaces(char *str);
+int			is_env_skip_match(char *env_var, char *skip);
+int			get_env_variable(char **env, char *key);
+
 
 //utilits_env
 char		*get_env_value(char **envp, char *key);
@@ -158,7 +161,7 @@ void		ft_exit(t_shell *shell);
 
 //builtins2
 char		**ft_export(char **env, char **new_var);
-char		**ft_unset(char **env, char *to_remove);
+char		**ft_unset(char **env, char **to_remove);
 
 //executor
 void		ft_executer(t_shell *shell);

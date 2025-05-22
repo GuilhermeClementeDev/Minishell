@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:19:25 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/22 07:37:04 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/22 13:35:09 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	execute_builtin(t_shell *shell)
 	else if (!ft_strncmp(command, "export", 7))
 		shell->env = ft_export(shell->env, shell->cmds->args);
 	else if (!ft_strncmp(command, "unset", 6))
-		shell->env = ft_unset(shell->env, shell->cmds->args[1]);
+		shell->env = ft_unset(shell->env, shell->cmds->args);
 	else
 	{
 		pid = fork();
