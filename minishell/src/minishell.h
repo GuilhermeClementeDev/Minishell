@@ -6,7 +6,7 @@
 /*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/25 18:51:59 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/05/25 20:15:18 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,8 +183,8 @@ int			apply_redirects_to_all(t_cmd *cmd_list);
 
 //redirects_utils.c
 void		change_cmd_fd(t_cmd *cmd, t_redirect *redir, int fd);
-int			open_fd_redir(t_redirect *redir, int *fd);
-void		verify_fd_cmd(t_cmd *cmd, t_redirect *r, int fd, int *error);
+int			open_fd_redir(t_redirect *redir);
+int	verify_fd_cmd(t_cmd *cmd, t_redirect *r, int fd);
 
 //heredoc.c
 void		process_heredocs(t_cmd *cmd_list);

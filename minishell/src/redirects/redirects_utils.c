@@ -6,7 +6,7 @@
 /*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 15:15:42 by bieldojt          #+#    #+#             */
-/*   Updated: 2025/05/21 15:59:53 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/05/25 19:51:00 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	change_cmd_fd(t_cmd *cmd, t_redirect *redir, int fd)
 	}
 }
 
-int	open_fd_redir(t_redirect *redir, int *fd)
+int	open_fd_redir(t_redirect *redir)
 {
 	int	tmp_fd;
 
@@ -40,19 +40,19 @@ int	open_fd_redir(t_redirect *redir, int *fd)
 		tmp_fd = open(redir->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else if (redir->type == T_HEREDOC)
 		tmp_fd = open(redir->filename, O_RDONLY);
-	else
-		tmp_fd = -1;
-	*fd = tmp_fd;
 	return (tmp_fd);
 }
 
-void	verify_fd_cmd(t_cmd *cmd, t_redirect *r, int fd, int *error)
+int	verify_fd_cmd(t_cmd *cmd, t_redirect *r, int fd)
 {
 	if (fd < 0)
 	{
 		perror(r->filename);
-		*error = 1;
+		return (-1);
 	}
 	else
+	{
 		change_cmd_fd(cmd, r, fd);
+		return (0);
+	}
 }

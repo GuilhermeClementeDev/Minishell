@@ -6,7 +6,7 @@
 /*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:19:25 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/25 18:51:16 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/05/25 20:25:54 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 int	is_builtin(char *cmd)
 {
 	int		size;
-
+	if (!cmd)
+		return (0);
 	size = ft_strlen(cmd);
 	if (!ft_strncmp(cmd, "cd", size) || !ft_strncmp(cmd, "exit", size) \
 	|| !ft_strncmp(cmd, "export", size) || !ft_strncmp(cmd, "unset", size))
@@ -116,15 +117,7 @@ void	execute_external_func(t_shell *shell, t_cmd *cmd)
 {
 	char	*path;
 
-	if(cmd->redirect_error)
-	{
-		perror("Redirection error");
-		close_cmd_fds(shell->cmds); //liberar tudo
-		ft_clean_shell(shell);
-		free_env(shell->env);
-		free(shell);
-		exit(1);
-	}
+
 	if (cmd->fd_out != 1)
 	{
 		dup2(cmd->fd_out, 1);
@@ -135,6 +128,24 @@ void	execute_external_func(t_shell *shell, t_cmd *cmd)
 		dup2(cmd->fd_in, 0);
 		close(cmd->fd_in);
 	}
+	if(cmd->redirect_error)
+	{
+		perror("Redirection error");
+		close_cmd_fds(shell->cmds); //liberar tudo
+		ft_clean_shell(shell);
+		free_env(shell->env);
+		free(shell);
+		exit(1);
+	}
+	if(cmd->args[0] == NULL && cmd->redirects)
+	{
+		close_cmd_fds(shell->cmds); //liberar tudo
+		ft_clean_shell(shell);
+		free_env(shell->env);
+		free(shell);
+		exit(0);
+	}
+
 	close_cmd_fds(shell->cmds); //liberar tudo // Fecha todos os FDs abertos dos comandos, exceto os padrões
 	path = find_cmd_path(shell, cmd);
 	if (!path)
