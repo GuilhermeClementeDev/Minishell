@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
+/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:36 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/22 17:04:58 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/25 14:24:46 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,21 @@ void	token_and_parse(t_shell *shell)
 	shell->cmds = parse_tokens(shell->tokens);
 	print_cmds(&shell->cmds);
 	free_token_list(shell->tokens);
+}
+
+void close_cmd_fds(t_cmd *cmd_list)
+{
+	t_cmd	*cmd;
+
+	cmd = cmd_list;
+	while (cmd)
+	{
+		if (cmd->fd_in != STDIN_FILENO)
+			close(cmd->fd_in);
+		if (cmd->fd_out != STDOUT_FILENO)
+			close(cmd->fd_out);
+		cmd = cmd->next;
+	}
 }
 /*
 int	execution(t_shell *shell)
@@ -54,6 +69,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		ft_signals();
 		shell->input = readline("minishell> ");
+		//shell->input = "> a echo algo aqui | cat a";
 		if (!shell->input)
 			ft_exit(shell);
 		if (is_space_or_invalid(shell->input))
@@ -61,7 +77,14 @@ int	main(int argc, char **argv, char **envp)
 		token_and_parse(shell);
 		if (should_add_to_history(shell->input))
 			add_history(shell->input);
+		process_heredocs(shell->cmds);
+		if (!prepare_execution(shell->cmds))
+		{
+			ft_clean_shell(shell);
+			continue;
+		}
 		ft_executer(shell);
+		close_cmd_fds(shell->cmds);
 		ft_clean_shell(shell);
 	}
 	free_env(shell->env);
