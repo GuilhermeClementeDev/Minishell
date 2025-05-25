@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
+/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/22 18:38:00 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/25 18:51:59 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_shell
 
 //main
 int			ft_not_only_spaces(char *str);
+void		close_cmd_fds(t_cmd *cmd_list);
 void		free_input_token_cmd(char *input, t_cmd *cmd_list);
 
 //utilits_main
@@ -198,5 +199,8 @@ void		ft_executer(t_shell *shell);
 
 // signals
 void		ft_signals(void);
+
+
+void close_cmd_fds(t_cmd *cmd_list);
 
 #endif

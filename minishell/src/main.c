@@ -6,7 +6,7 @@
 /*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:36 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/25 14:24:46 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/05/25 18:52:19 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,6 @@ void close_cmd_fds(t_cmd *cmd_list)
 		cmd = cmd->next;
 	}
 }
-/*
-int	execution(t_shell *shell)
-{
-	process_heredocs(shell->cmds);
-	if (!prepare_execution(shell->cmds))
-	{
-		ft_clean_shell(shell);
-		return (0);
-	}
-	execute_pipeline(shell->cmds, &shell->env);
-	close_cmd_fds(shell->cmds);
-	return (1);
-}*/
 
 static int	should_add_to_history(char *str)
 {
