@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:46:09 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/26 09:20:05 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/26 19:28:29 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	ft_build_shell(t_shell *shell, char **envp)
 	copy_env_skip(envp, shell->env, NULL, NULL);
 	ft_shlvl(shell);
 	ft_env_pwd(shell);
+	shell->status = 0;
 	shell->input = NULL;
 	shell->tokens = NULL;
 	shell->cmds = NULL;
@@ -117,7 +118,7 @@ int	is_space_or_invalid(char *input)
 	return (0);
 }
 
-t_token	*list_token(char *input)
+t_token	*list_token(char *input, t_shell *shell)
 {
 	t_token	*token_list;
 

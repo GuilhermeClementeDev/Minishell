@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/26 17:50:40 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/26 19:30:56 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_shell
 	t_token		*tokens;
 	t_cmd		*cmds;
 	char		**env;
+	int			status;
 }	t_shell;
 
 //main
@@ -199,9 +200,9 @@ void		ft_executer(t_shell *shell);
 
 // signals
 void		ft_signals(void);
-void	ft_signals_child(int status);
+void		ft_signals_child(int status, t_shell *shell);
 
 
-void close_cmd_fds(t_cmd *cmd_list);
+void		close_cmd_fds(t_cmd *cmd_list);
 
 #endif

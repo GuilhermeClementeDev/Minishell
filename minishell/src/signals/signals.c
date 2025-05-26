@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 12:38:02 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/26 18:20:31 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/26 18:38:31 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,19 @@ void	sigint_handler(int sig)
 	rl_on_new_line();
 	rl_redisplay();
 }
-void	ft_signals_child(int status)
+void	ft_signals_child(int status, t_shell *shell)
 {
 	if (WIFSIGNALED(status))
 	{
 		int sig = WTERMSIG(status);
 		if (sig == SIGQUIT)
 			write(2, "Quit (core dumped)\n", 19);
+			shell->status = 128 + sig;
 	}
+	else if (WIFEXITED(status))
+		shell->status = WEXITSTATUS(status);
 	else
-	{
-		// Aqui você pode guardar o status de saída normal (caso queira usar $? depois)
-	}
+		shell->status = 1;
 }
 void	ft_signals(void)
 {

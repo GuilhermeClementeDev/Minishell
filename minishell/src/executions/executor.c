@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:19:25 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/26 12:39:59 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/26 18:36:43 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,6 @@ void	ft_executer(t_shell *shell)
 		cmd = cmd->next;
 	}
 	while (wait(&status) > 0)
-		ft_signals_child(status);
+		ft_signals_child(status, shell);
 	// Espera todos os processos filhos terminarem
 }
