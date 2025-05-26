@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/25 20:15:18 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/05/26 17:50:40 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,7 @@ void		ft_executer(t_shell *shell);
 
 // signals
 void		ft_signals(void);
+void	ft_signals_child(int status);
 
 
 void close_cmd_fds(t_cmd *cmd_list);

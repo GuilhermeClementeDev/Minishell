@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:46:09 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/22 16:33:17 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/26 09:20:05 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,8 @@ t_token	*list_token(char *input)
 
 void	free_input_token_cmd(char *input, t_cmd *cmd_list)
 {
-	free(input);
-	free_commands(cmd_list);
+	if (input)
+		free(input);
+	if (cmd_list)
+		free_commands(cmd_list);
 }
