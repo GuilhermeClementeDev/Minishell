@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
+/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 16:56:02 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/22 19:14:39 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/25 20:56:32 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ void	ft_exit(t_shell *shell)
 		print_error("exit", str, "numeric argument required");
 		status = 2;
 	}
+	close_cmd_fds(shell->cmds);
+	ft_clean_shell(shell);
 	free_env(shell->env);
 	free(shell);
 	clear_history();
