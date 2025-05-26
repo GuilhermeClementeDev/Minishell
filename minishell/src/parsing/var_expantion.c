@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:55:53 by gda-conc          #+#    #+#             */
-/*   Updated: 2025/05/26 19:31:18 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/26 20:23:55 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*expand_variable(char *input, int *index)
 
 	start = *index;
 	(*index)++;
-	while (input[*index] && (isalnum(input[*index]) || input[*index] == '_'))
+	while (input[*index] && (ft_isalnum(input[*index]) || input[*index] == '_'))
 		(*index)++;
 	var_name = ft_substr(input, start + 1, *index - start - 1);
 	var_value = get_env_var_value(var_name);
