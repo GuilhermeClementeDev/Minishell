@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 12:38:02 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/26 20:19:32 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/27 11:57:41 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ void	sigint_handler(int sig)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
+}
+void	sigint_exec_handler(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
 }
 void	ft_signals_child(int status, t_shell *shell)
 {
