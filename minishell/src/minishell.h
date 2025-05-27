@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/27 11:58:33 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:07:39 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void		free_input_token_cmd(char *input, t_cmd *cmd_list);
 void		ft_build_shell(t_shell *shell, char **envp);
 void		ft_clean_shell(t_shell *shell);
 int			is_space_or_invalid(char *input);
-t_token		*list_token(char *input);
+t_token		*list_token(char *input, t_shell *shell);
 void		free_input_token_cmd(char *input, t_cmd *cmd_list);
 
 //verify_input.c
@@ -118,18 +118,7 @@ void		free_redirects(t_redirect *redirects);
 void		free_commands(t_cmd *cmds);
 
 //var_expansion.c
-void		expand_variables_in_token(t_token *token);
-char		*expand_variable(char *input, int *index);
-
-//var_expansion_utils.c
-int			quoted_part(char *input, int *i, char **expanded_str);
-int			var_expansion(char *input, int *i, char **expanded_str);
-int			handle_normal_char(char *input, int *i, char **expand_str);
-char		*initialize_expanded_str(void);
-
-//var_expansion_utils2.c
-void		expand_variables_in_str(char **str, char *input);
-int			quotes_or_expansion(char **exp_str, char *input, int *i);
+void	expand_variables_in_token(t_token *tokens, t_shell *shell);
 
 //prints.c
 void		print_tokens(t_token **head);

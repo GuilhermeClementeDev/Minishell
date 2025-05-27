@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:36 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/26 19:28:51 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/27 13:34:09 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	token_and_parse(t_shell *shell)
 {
-	shell->tokens = list_token(shell->input);
+	shell->tokens = list_token(shell->input, shell);
 	shell->cmds = parse_tokens(shell->tokens);
 	print_cmds(&shell->cmds);
 	free_token_list(shell->tokens);

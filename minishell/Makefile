@@ -25,8 +25,6 @@ SRCS = \
 	$(SRC_DIR)/$(PARSING_DIR)/parser.c \
 	$(SRC_DIR)/$(PARSING_DIR)/parser_utils.c \
 	$(SRC_DIR)/$(PARSING_DIR)/var_expantion.c \
-	$(SRC_DIR)/$(PARSING_DIR)/var_expantion_utils.c \
-	$(SRC_DIR)/$(PARSING_DIR)/var_expantion_utils2.c \
 	$(SRC_DIR)/$(PARSING_DIR)/free_elements.c \
 	$(SRC_DIR)/$(PARSING_DIR)/prints.c \
 	$(SRC_DIR)/$(PARSING_DIR)/prints_utils.c \

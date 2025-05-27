@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:46:09 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/26 20:16:20 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/27 13:36:39 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,12 +118,12 @@ int	is_space_or_invalid(char *input)
 	return (0);
 }
 
-t_token	*list_token(char *input)
+t_token	*list_token(char *input, t_shell *shell)
 {
 	t_token	*token_list;
 
 	token_list = lexer(input);
-	expand_variables_in_token(token_list);
+	expand_variables_in_token(token_list, shell);
 	clean_tokens(token_list);
 	return (token_list);
 }
