@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/27 15:07:39 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:45:23 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,9 @@ void		copy_env_skip(char **old_env, char **new_env, \
 char *skip, char *new_var);
 void		ft_new_env_pwds(t_shell *shell);
 
+//utilits_builtins2.c
+int			ft_only_chr(char *str, char a);
+
 //utilits_export
 int			is_valid_export(char *str);
 int			ft_change_value(char **env, char *new_var);
@@ -153,10 +156,10 @@ void		free_env(char **env);
 void		print_error(char *cmd, char *str, char *msg);
 
 //builtins1
-void		ft_echo(char **str);
-void		ft_pwd(void);
-void		ft_env(char **envp);
-void		ft_cd(t_shell *shell, char **str, char **envp);
+int			ft_echo(char **str);
+int			ft_pwd(void);
+int			ft_env(char **envp);
+int			ft_cd(t_shell *shell, char **str, char **envp);
 void		ft_exit(t_shell *shell);
 
 //builtins2

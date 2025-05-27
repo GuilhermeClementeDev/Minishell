@@ -3,49 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 16:56:02 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/25 20:56:32 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/05/27 19:04:17 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_echo(char **str)
+int	ft_echo(char **str)
 {
 	int	i;
 	int	flag;
 
 	i = 1;
 	flag = 0;
-	if (str[i] && ft_strncmp(str[i], "-n", ft_strlen(str[i])) == 0)
+	if (str[i] && ft_strncmp(str[i], "-n", 2) == 0 \
+	&& ft_only_chr(&str[i][1], 'n') == 0)
 	{
 		flag = 1;
 		i++;
 	}
 	while (str[i])
 	{
-		printf("%s", str[i]);
-		if (str[i + 1])
-			printf(" ");
+		if (str[i][0] != '\0')
+		{
+			printf("%s", str[i]);
+			if (str[i + 1])
+				printf(" ");
+		}
 		i++;
 	}
 	if (!flag)
 		printf("\n");
+	return (0);
 }
 
-void	ft_pwd(void)
+int	ft_pwd(void)
 {
 	char	cwd[PATH_MAX];
 
 	if (getcwd(cwd, sizeof(cwd)))
+	{
 		printf("%s\n", cwd);
-	else
-		ft_error("Unable to get pwd", 1);
+		return (0);
+	}
+	return (1);
 }
 
-void	ft_env(char **envp)
+int	ft_env(char **envp)
 {
 	int	i;
 
@@ -56,9 +63,10 @@ void	ft_env(char **envp)
 			printf("%s\n", envp[i]);
 		i++;
 	}
+	return (0);
 }
 
-void	ft_cd(t_shell *shell, char **str, char **envp)
+int	ft_cd(t_shell *shell, char **str, char **envp)
 {
 	char	*path;
 	char	cwd[PATH_MAX];
@@ -68,17 +76,21 @@ void	ft_cd(t_shell *shell, char **str, char **envp)
 	else
 		path = ft_strdup(get_env_value(envp, "HOME"));
 	if (!path)
-		print_error("cd", NULL, "HOME not set");
-	if (path)
 	{
-		if (path[0] != '/')
-			path = ft_full_path(getcwd(cwd, sizeof(cwd)), path);
-		if (chdir(path) != 0)
-			print_error("cd", (char *)path, "No such file or directory");
-		else
-			ft_new_env_pwds(shell);
+		print_error("cd", NULL, "HOME not set");
+		return (1);
 	}
+	if (path[0] != '/')
+		path = ft_full_path(getcwd(cwd, sizeof(cwd)), path);
+	if (chdir(path) != 0)
+	{
+		print_error("cd", (char *)path, "No such file or directory");
+		free(path);
+		return (1);
+	}
+	ft_new_env_pwds(shell);
 	free(path);
+	return (0);
 }
 
 void	ft_exit(t_shell *shell)

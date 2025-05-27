@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:19:25 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/27 11:58:02 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/27 19:02:06 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ int	is_builtin(char *cmd)
 void	execute_builtin(t_shell *shell, t_cmd *cmd)
 {
 	char	*command;
+	int		status;
 
+	status = 1;
 	command = cmd->args[0];
 
 	if(cmd->redirect_error)
@@ -54,13 +56,13 @@ void	execute_builtin(t_shell *shell, t_cmd *cmd)
 	}
 	close_cmd_fds(shell->cmds); // Fecha todos os FDs abertos dos comandos, exceto os padrões
 	if (!ft_strncmp(command, "echo", 5))
-		ft_echo(cmd->args);
+		status = ft_echo(cmd->args);
 	else if (!ft_strncmp(command, "pwd", 4))
-		ft_pwd();
+		status = ft_pwd();
 	else if (!ft_strncmp(command, "env", 4))
-		ft_env(shell->env);
+		status = ft_env(shell->env);
 	else if (!ft_strncmp(command, "cd", 3))
-		ft_cd(shell ,cmd->args, shell->env);
+		status = ft_cd(shell ,cmd->args, shell->env);
 	else if (!ft_strncmp(command, "exit", 5))
 		ft_exit(shell);
 	else if (!ft_strncmp(command, "export", 7))
@@ -70,22 +72,25 @@ void	execute_builtin(t_shell *shell, t_cmd *cmd)
 	ft_clean_shell(shell);
 	free_env(shell->env);
 	free(shell);
-	exit(0);
+	exit(status);
 }
 
-static void	execute_builtin_parent(t_shell *shell, t_cmd *cmd)
+static int	execute_builtin_parent(t_shell *shell, t_cmd *cmd)
 {
 	char	*command;
+	int		status;
 
+	status = 1;
 	command = cmd->args[0];
 	if (!ft_strncmp(command, "cd", 3))
-		ft_cd(shell ,cmd->args, shell->env);
+		status = ft_cd(shell ,cmd->args, shell->env);
 	else if (!ft_strncmp(command, "exit", 5))
 		ft_exit(shell);
 	else if (!ft_strncmp(command, "export", 7))
 		shell->env = ft_export(shell->env, cmd->args);
 	else if (!ft_strncmp(command, "unset", 6))
 		shell->env = ft_unset(shell->env, cmd->args);
+	return (status);
 }
 char	*find_cmd_path(t_shell *shell, t_cmd *cmd)
 {
@@ -180,7 +185,7 @@ void	ft_executer(t_shell *shell)
 	{
 		if(!shell->cmds->next && is_builtin(cmd->args[0]) == 1)
 		{
-			execute_builtin_parent(shell, cmd);
+			shell->status = execute_builtin_parent(shell, cmd);
 			cmd = cmd->next;
 			continue ;
 		}

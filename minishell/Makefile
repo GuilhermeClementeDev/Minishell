@@ -29,6 +29,7 @@ SRCS = \
 	$(SRC_DIR)/$(PARSING_DIR)/prints.c \
 	$(SRC_DIR)/$(PARSING_DIR)/prints_utils.c \
 	$(SRC_DIR)/$(BUILTIN_DIR)/utilits.c \
+	$(SRC_DIR)/$(BUILTIN_DIR)/utilits_builtins2.c\
 	$(SRC_DIR)/$(BUILTIN_DIR)/utilits_env.c \
 	$(SRC_DIR)/$(BUILTIN_DIR)/utilits_export.c \
 	$(SRC_DIR)/$(BUILTIN_DIR)/builtins.c \
