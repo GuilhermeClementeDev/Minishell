@@ -6,7 +6,7 @@
 /*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:36 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/28 15:15:07 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:55:57 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	main(int argc, char **argv, char **envp)
 		shell->input = readline("minishell> ");
 		//shell->input = "> a echo algo aqui | cat a";
 		if (!shell->input)
-			ft_exit(shell ,NULL);
+			ft_exit(shell, NULL);
 		if (is_space_or_invalid(shell->input))
 			continue ;
 		token_and_parse(shell);

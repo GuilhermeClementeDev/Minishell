@@ -6,7 +6,7 @@
 /*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/28 15:14:21 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:32:26 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,8 +163,8 @@ int			ft_cd(t_shell *shell, char **str, char **envp);
 void		ft_exit(t_shell *shell , t_cmd *cmd);
 
 //builtins2
-char		**ft_export(char **env, char **new_var);
-char		**ft_unset(char **env, char **to_remove);
+int			ft_export(char **env, char **new_var, t_shell *shell);
+int			ft_unset(char **env, char **to_remove, t_shell *shell);
 
 //pipes.c
 int			setup_pipes(t_cmd *cmd_list);

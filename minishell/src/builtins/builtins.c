@@ -6,7 +6,7 @@
 /*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 16:56:02 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/28 15:15:29 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/05/28 16:10:07 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,28 +93,40 @@ int	ft_cd(t_shell *shell, char **str, char **envp)
 	return (0);
 }
 
-void	ft_exit(t_shell *shell , t_cmd *cmd)
+void	ft_exit(t_shell *shell, t_cmd *cmd)
 {
-	int		status;
-	char	*str;
-	int		i;
+	int		status = 0;
+	char	*str = NULL;
+	int		i = 0;
 
-	status = 0;
-	i = 0;
-	if (cmd)
-		str = cmd->args[1];
-	else
-		str = NULL;
-	while (str && str[i] && ft_isdigit(str[i]))
-		i++;
 	ft_putstr_fd("exit\n", 1);
-	if (str && str[i] == '\0')
-		status = ft_atoi(str);
-	else if (str)
+	if (cmd && cmd->args[1])
+		str = cmd->args[1];
+
+	if (str)
 	{
-		print_error("exit", str, "numeric argument required");
-		status = 2;
+		if (str[0] == '-' || str[0] == '+')
+			i++;
+		while (str[i] && ft_isdigit(str[i]))
+			i++;
+		if (str[i] == '\0')
+			status = ft_atoi(str);
+		else
+		{
+			print_error("exit", str, "numeric argument required");
+			status = 2;
+		}
 	}
+
+	if (str && cmd->args[2] && status != 2)
+	{
+		print_error("exit", NULL, "too many arguments");
+		shell->status = 1;
+		return ;
+	}
+	else if (str && status != 2)
+		status = (unsigned char)ft_atoi(str);
+
 	close_cmd_fds(shell->cmds);
 	ft_clean_shell(shell);
 	free_env(shell->env);
@@ -122,6 +134,7 @@ void	ft_exit(t_shell *shell , t_cmd *cmd)
 	clear_history();
 	exit(status);
 }
+
 /* //echo
 int main(void)
 {
