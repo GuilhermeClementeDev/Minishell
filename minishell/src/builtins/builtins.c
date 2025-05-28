@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 16:56:02 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/27 19:04:17 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:25:59 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,13 +101,15 @@ void	ft_exit(t_shell *shell)
 
 	status = 0;
 	i = 0;
+	ft_putstr_fd("exit\n", 1);
 	if (shell->cmds)
 		str = shell->cmds->args[1];
 	else
 		str = NULL;
+	if (str && str[0] == '-' || str[0] == '+')
+		i++;
 	while (str && str[i] && ft_isdigit(str[i]))
 		i++;
-	ft_putstr_fd("exit\n", 1);
 	if (str && str[i] == '\0')
 		status = ft_atoi(str);
 	else if (str)
@@ -115,6 +117,14 @@ void	ft_exit(t_shell *shell)
 		print_error("exit", str, "numeric argument required");
 		status = 2;
 	}
+	else if (cmd->args[2])
+	{
+		print_error("exit", NULL, "too many arguments");
+		shell->status = 1;
+		return ;
+	}
+	else
+		status = (unsigned char)ft_atoi(str);
 	close_cmd_fds(shell->cmds);
 	ft_clean_shell(shell);
 	free_env(shell->env);
