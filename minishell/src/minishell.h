@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/27 18:45:23 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:56:42 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,8 +163,8 @@ int			ft_cd(t_shell *shell, char **str, char **envp);
 void		ft_exit(t_shell *shell);
 
 //builtins2
-char		**ft_export(char **env, char **new_var);
-char		**ft_unset(char **env, char **to_remove);
+int			ft_export(char **env, char **new_var, t_shell *shell);
+int			ft_unset(char **env, char **to_remove, t_shell *shell);
 
 //pipes.c
 int			setup_pipes(t_cmd *cmd_list);

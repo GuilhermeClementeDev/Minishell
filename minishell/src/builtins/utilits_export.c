@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:06:49 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/22 16:32:18 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:58:28 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ int	is_valid_export(char *str)
 	while (str[i] && str[i] != '=')
 	{
 		if (!ft_isalnum(str[i]) && str[i] != '_')
+		{
+			print_error("export", str, "not a valid identifier");
 			return (0);
+		}
 		i++;
 	}
 	return (1);

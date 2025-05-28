@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:46:09 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/27 13:36:39 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:13:28 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	ft_shlvl(t_shell *shell)
 		vars = single_var("SHLVL=1");
 		if (vars)
 		{
-			shell->env = ft_export(shell->env, vars);
+			ft_export(shell->env, vars, shell);
 			free(vars);
 		}
 	}
@@ -67,7 +67,7 @@ static void	ft_env_pwd(t_shell	*shell)
 	if (!get_env_variable(shell->env, "PWD"))
 	{
 		new_env = single_var(pwd);
-		shell->env = ft_export(shell->env, new_env);
+		ft_export(shell->env, new_env, shell);
 		free(new_env);
 	}
 	else
@@ -76,7 +76,7 @@ static void	ft_env_pwd(t_shell	*shell)
 	if (!get_env_variable(shell->env, "OLDPWD"))
 	{
 		new_env = single_var("OLDPWD");
-		shell->env = ft_export(shell->env, new_env);
+		ft_export(shell->env, new_env, shell);
 		free(new_env);
 	}
 }

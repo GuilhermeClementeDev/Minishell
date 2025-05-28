@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:19:25 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/27 19:02:06 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:56:11 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ void	execute_builtin(t_shell *shell, t_cmd *cmd)
 	else if (!ft_strncmp(command, "exit", 5))
 		ft_exit(shell);
 	else if (!ft_strncmp(command, "export", 7))
-		shell->env = ft_export(shell->env, cmd->args);
+		status = ft_export(shell->env, cmd->args, shell);
 	else if (!ft_strncmp(command, "unset", 6))
-		shell->env = ft_unset(shell->env, cmd->args);
+		status = ft_unset(shell->env, cmd->args, shell);
 	ft_clean_shell(shell);
 	free_env(shell->env);
 	free(shell);
@@ -87,9 +87,9 @@ static int	execute_builtin_parent(t_shell *shell, t_cmd *cmd)
 	else if (!ft_strncmp(command, "exit", 5))
 		ft_exit(shell);
 	else if (!ft_strncmp(command, "export", 7))
-		shell->env = ft_export(shell->env, cmd->args);
+		status = ft_export(shell->env, cmd->args, shell);
 	else if (!ft_strncmp(command, "unset", 6))
-		shell->env = ft_unset(shell->env, cmd->args);
+		status = ft_unset(shell->env, cmd->args, shell);
 	return (status);
 }
 char	*find_cmd_path(t_shell *shell, t_cmd *cmd)
