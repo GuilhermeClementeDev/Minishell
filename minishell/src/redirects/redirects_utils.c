@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirects_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 15:15:42 by bieldojt          #+#    #+#             */
-/*   Updated: 2025/05/25 19:51:00 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/05/28 12:06:34 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	open_fd_redir(t_redirect *redir)
 {
 	int	tmp_fd;
 
+	tmp_fd = -1;
 	if (redir->type == T_RED_IN)
 		tmp_fd = open(redir->filename, O_RDONLY);
 	else if (redir->type == T_RED_OUT)

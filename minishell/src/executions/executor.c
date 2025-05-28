@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
+/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:19:25 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/27 19:02:06 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:16:23 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	execute_builtin(t_shell *shell, t_cmd *cmd)
 	else if (!ft_strncmp(command, "cd", 3))
 		status = ft_cd(shell ,cmd->args, shell->env);
 	else if (!ft_strncmp(command, "exit", 5))
-		ft_exit(shell);
+		ft_exit(shell, cmd);
 	else if (!ft_strncmp(command, "export", 7))
 		shell->env = ft_export(shell->env, cmd->args);
 	else if (!ft_strncmp(command, "unset", 6))
@@ -85,7 +85,7 @@ static int	execute_builtin_parent(t_shell *shell, t_cmd *cmd)
 	if (!ft_strncmp(command, "cd", 3))
 		status = ft_cd(shell ,cmd->args, shell->env);
 	else if (!ft_strncmp(command, "exit", 5))
-		ft_exit(shell);
+		ft_exit(shell, cmd);
 	else if (!ft_strncmp(command, "export", 7))
 		shell->env = ft_export(shell->env, cmd->args);
 	else if (!ft_strncmp(command, "unset", 6))
@@ -98,6 +98,8 @@ char	*find_cmd_path(t_shell *shell, t_cmd *cmd)
 	char	*path_env;
 	int		i;
 
+	if (ft_strchr(cmd->args[0], '/'))
+		return (ft_strdup(cmd->args[0]));
 	i = 0;
 	path_env = get_env_value(shell->env, "PATH");
 	if (!path_env)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
+/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/27 18:45:23 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:14:21 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ int			ft_echo(char **str);
 int			ft_pwd(void);
 int			ft_env(char **envp);
 int			ft_cd(t_shell *shell, char **str, char **envp);
-void		ft_exit(t_shell *shell);
+void		ft_exit(t_shell *shell , t_cmd *cmd);
 
 //builtins2
 char		**ft_export(char **env, char **new_var);

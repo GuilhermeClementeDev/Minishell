@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
+/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 16:56:02 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/27 19:04:17 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:15:29 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	ft_cd(t_shell *shell, char **str, char **envp)
 	return (0);
 }
 
-void	ft_exit(t_shell *shell)
+void	ft_exit(t_shell *shell , t_cmd *cmd)
 {
 	int		status;
 	char	*str;
@@ -101,8 +101,8 @@ void	ft_exit(t_shell *shell)
 
 	status = 0;
 	i = 0;
-	if (shell->cmds)
-		str = shell->cmds->args[1];
+	if (cmd)
+		str = cmd->args[1];
 	else
 		str = NULL;
 	while (str && str[i] && ft_isdigit(str[i]))
