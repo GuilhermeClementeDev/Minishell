@@ -6,17 +6,17 @@
 /*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 15:31:31 by bieldojt          #+#    #+#             */
-/*   Updated: 2025/05/21 15:31:36 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/05/29 10:42:41 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	handle_heredoc_redirect(t_redirect *redir)
+static int	handle_heredoc_redirect(t_redirect *redir, int *count_heredocs)
 {
 	char	*tmp_file;
 
-	tmp_file = create_heredoc_file(redir->filename);
+	tmp_file = create_heredoc_file(redir->filename, count_heredocs);
 	if (!tmp_file)
 		return (0);
 	if (redir->filename)
@@ -29,8 +29,10 @@ void	process_heredocs(t_cmd *cmd_list)
 {
 	t_cmd		*cmd;
 	t_redirect	*redir;
+	int		count_heredocs;
 
 	cmd = cmd_list;
+	count_heredocs = 1;
 	while (cmd)
 	{
 		redir = cmd->redirects;
@@ -38,7 +40,7 @@ void	process_heredocs(t_cmd *cmd_list)
 		{
 			if (redir->type == T_HEREDOC)
 			{
-				if (!handle_heredoc_redirect(redir))
+				if (!handle_heredoc_redirect(redir, &count_heredocs))
 				{
 					cmd->redirect_error = 1;
 					return ;
