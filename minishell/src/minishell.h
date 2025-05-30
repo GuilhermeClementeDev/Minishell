@@ -6,7 +6,7 @@
 /*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/29 18:33:58 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/05/29 22:27:25 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_cmd
 	int				fd_in;
 	int				fd_out;
 	int				redirect_error;
+	char			*filename_error;
 	struct s_cmd	*next;
 }	t_cmd;
 

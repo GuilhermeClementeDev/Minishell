@@ -6,11 +6,39 @@
 /*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:19:25 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/29 22:07:23 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/05/29 23:29:37 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	check_exec_path(const char *path)
+{
+	struct stat	sb;
+
+	if (stat(path, &sb) == -1)
+	{
+		if (errno == ENOENT)
+			print_error((char *)path, NULL, "No such file or directory");
+		else
+			perror(path);
+		return (-1);
+	}
+	if (S_ISDIR(sb.st_mode))
+	{
+		print_error((char *)path, NULL, "Is a directory");
+		return (-1);
+	}
+	if (access(path, X_OK) == -1)
+	{
+		if (errno == EACCES)
+			print_error((char *)path, NULL, "Permission denied");
+		else
+			perror(path);
+		return (-1);
+	}
+	return (0);
+}
 
 int	is_builtin(char *cmd)
 {
@@ -37,7 +65,7 @@ void	execute_builtin(t_shell *shell, t_cmd *cmd)
 
 	if(cmd->redirect_error)
 	{
-		perror("Redirection error");
+		check_exec_path(cmd->filename_error);
 		close_cmd_fds(shell->cmds); //liberar tudo
 		ft_clean_shell(shell);
 		free_env(shell->env);
@@ -120,33 +148,7 @@ char	*find_cmd_path(t_shell *shell, t_cmd *cmd)
 	free_env(paths);
 	return (NULL);
 }
-int	check_exec_path(const char *path)
-{
-	struct stat	sb;
 
-	if (stat(path, &sb) == -1)
-	{
-		if (errno == ENOENT)
-			print_error((char *)path, NULL, "No such file or directory");
-		else
-			perror(path);
-		return (-1);
-	}
-	if (S_ISDIR(sb.st_mode))
-	{
-		print_error((char *)path, NULL, "Is a directory");
-		return (-1);
-	}
-	if (access(path, X_OK) == -1)
-	{
-		if (errno == EACCES)
-			print_error((char *)path, NULL, "Permission denied");
-		else
-			perror(path);
-		return (-1);
-	}
-	return (0);
-}
 void	execute_external_func(t_shell *shell, t_cmd *cmd)
 {
 	char	*path;
@@ -164,7 +166,7 @@ void	execute_external_func(t_shell *shell, t_cmd *cmd)
 	}
 	if(cmd->redirect_error)
 	{
-		perror("Redirection error");
+		check_exec_path(cmd->filename_error);
 		close_cmd_fds(shell->cmds); //liberar tudo
 		ft_clean_shell(shell);
 		free_env(shell->env);
@@ -184,9 +186,6 @@ void	execute_external_func(t_shell *shell, t_cmd *cmd)
 	path = find_cmd_path(shell, cmd);
 	if (!path)
 	{
-		//ft_putstr_fd("-bash: ", 2);
-		//ft_putstr_fd(cmd->args[0], 2);
-		//ft_putstr_fd(": command not found\n", 2);
 		print_error(cmd->args[0], NULL, "command not found");
 		close_cmd_fds(shell->cmds); //liberar tudo
 		ft_clean_shell(shell);

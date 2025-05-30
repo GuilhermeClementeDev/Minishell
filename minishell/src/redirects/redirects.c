@@ -6,7 +6,7 @@
 /*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:39:19 by bieldojt          #+#    #+#             */
-/*   Updated: 2025/05/25 20:41:44 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/05/29 22:32:17 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,15 @@ int	apply_redirects_to_fds(t_cmd *cmd)
 	error = 0;
 	cmd->fd_in = STDIN_FILENO;
 	cmd->fd_out = STDOUT_FILENO;
+	cmd->filename_error = NULL;
 	redir = cmd->redirects;
 	while (redir)
 	{
 		fd = open_fd_redir(redir);
 		if (fd  == -1)
 		{
+			if(error == 0)
+				cmd->filename_error = redir->filename;
 			redir = redir->next;
 			error = 1;
 			continue ;
