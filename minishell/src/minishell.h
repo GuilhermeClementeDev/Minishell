@@ -6,7 +6,7 @@
 /*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/29 10:43:18 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/05/29 18:33:58 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <linux/limits.h>
 # include <sys/wait.h>
 # include <signal.h>
+# include <sys/stat.h>
+# include <errno.h> //para testar a variavel global
 
 # define TRUE 1
 # define FALSE 0

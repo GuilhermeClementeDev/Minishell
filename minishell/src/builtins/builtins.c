@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 16:56:02 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/28 16:10:07 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/05/29 22:10:43 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	ft_cd(t_shell *shell, char **str, char **envp)
 		path = ft_full_path(getcwd(cwd, sizeof(cwd)), path);
 	if (chdir(path) != 0)
 	{
-		print_error("cd", (char *)path, "No such file or directory");
+		print_error("cd", str[1], "No such file or directory");
 		free(path);
 		return (1);
 	}

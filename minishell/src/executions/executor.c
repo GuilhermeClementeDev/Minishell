@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:19:25 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/28 15:35:02 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/05/29 22:07:23 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ char	*find_cmd_path(t_shell *shell, t_cmd *cmd)
 	{
 		path_env = ft_strjoin(paths[i], "/");
 		path_env = ft_join_gnl(path_env, cmd->args[0]);
-		if (access(path_env, X_OK) == 0)
+		if (access(path_env, X_OK ) == 0)
 		{
 			free_env(paths);
 			return (path_env);
@@ -119,6 +119,33 @@ char	*find_cmd_path(t_shell *shell, t_cmd *cmd)
 	}
 	free_env(paths);
 	return (NULL);
+}
+int	check_exec_path(const char *path)
+{
+	struct stat	sb;
+
+	if (stat(path, &sb) == -1)
+	{
+		if (errno == ENOENT)
+			print_error((char *)path, NULL, "No such file or directory");
+		else
+			perror(path);
+		return (-1);
+	}
+	if (S_ISDIR(sb.st_mode))
+	{
+		print_error((char *)path, NULL, "Is a directory");
+		return (-1);
+	}
+	if (access(path, X_OK) == -1)
+	{
+		if (errno == EACCES)
+			print_error((char *)path, NULL, "Permission denied");
+		else
+			perror(path);
+		return (-1);
+	}
+	return (0);
 }
 void	execute_external_func(t_shell *shell, t_cmd *cmd)
 {
@@ -157,17 +184,26 @@ void	execute_external_func(t_shell *shell, t_cmd *cmd)
 	path = find_cmd_path(shell, cmd);
 	if (!path)
 	{
-		ft_putstr_fd("-bash: ", 2);
-		ft_putstr_fd(cmd->args[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
+		//ft_putstr_fd("-bash: ", 2);
+		//ft_putstr_fd(cmd->args[0], 2);
+		//ft_putstr_fd(": command not found\n", 2);
+		print_error(cmd->args[0], NULL, "command not found");
 		close_cmd_fds(shell->cmds); //liberar tudo
 		ft_clean_shell(shell);
 		free_env(shell->env);
 		free(shell);
 		exit(127);
 	}
+	if(check_exec_path(path))
+	{
+		free(path);
+		close_cmd_fds(shell->cmds); //liberar tudo
+		ft_clean_shell(shell);
+		free_env(shell->env);
+		free(shell);
+		exit(EXIT_FAILURE);
+	}
 	execve(path, cmd->args, shell->env);
-	perror("execve");
 	free(path);
 	close_cmd_fds(shell->cmds); //liberar tudo
 	ft_clean_shell(shell);

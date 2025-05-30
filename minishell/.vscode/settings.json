@@ -3,7 +3,8 @@
 		"parsing",
 		"redirects and pipes",
 		"execution",
-		"built-in"
+		"built-in",
+		"errors"
 	],
 	"files.associations": {
 		"stdlib.h": "c"
