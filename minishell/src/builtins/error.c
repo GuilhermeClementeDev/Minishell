@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 13:28:11 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/29 22:05:17 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/06/02 18:37:25 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	free_env(char **env)
 
 void	print_error(char *cmd, char *str, char *msg)
 {
-	ft_putstr_fd("-minishell: ", 2); //mudei de bash para minishell
+	ft_putstr_fd("-minishell: ", 2);
 	if (cmd)
 	{
 		ft_putstr_fd(cmd, 2);

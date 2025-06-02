@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:46:09 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/28 14:13:28 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/06/02 17:57:33 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,39 +99,4 @@ void	ft_clean_shell(t_shell *shell)
 	shell->input = NULL;
 	shell->tokens = NULL;
 	shell->cmds = NULL;
-}
-
-int	is_space_or_invalid(char *input)
-{
-	if (!ft_not_only_spaces(input))
-	{
-		free(input);
-		input = NULL;
-		return (1);
-	}
-	if (check_syntax_error(input))
-	{
-		free(input);
-		input = NULL;
-		return (1);
-	}
-	return (0);
-}
-
-t_token	*list_token(char *input, t_shell *shell)
-{
-	t_token	*token_list;
-
-	token_list = lexer(input);
-	expand_variables_in_token(token_list, shell);
-	clean_tokens(token_list);
-	return (token_list);
-}
-
-void	free_input_token_cmd(char *input, t_cmd *cmd_list)
-{
-	if (input)
-		free(input);
-	if (cmd_list)
-		free_commands(cmd_list);
 }

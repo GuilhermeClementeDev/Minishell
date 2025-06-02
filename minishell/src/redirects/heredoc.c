@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 15:31:31 by bieldojt          #+#    #+#             */
-/*   Updated: 2025/05/29 10:42:41 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/06/02 18:17:21 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	process_heredocs(t_cmd *cmd_list)
 {
 	t_cmd		*cmd;
 	t_redirect	*redir;
-	int		count_heredocs;
+	int			count_heredocs;
 
 	cmd = cmd_list;
 	count_heredocs = 1;

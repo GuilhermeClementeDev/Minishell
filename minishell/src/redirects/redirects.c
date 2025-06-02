@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirects.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:39:19 by bieldojt          #+#    #+#             */
-/*   Updated: 2025/05/29 22:32:17 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/06/02 18:19:32 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	apply_redirects_to_fds(t_cmd *cmd)
 	while (redir)
 	{
 		fd = open_fd_redir(redir);
-		if (fd  == -1)
+		if (fd == -1)
 		{
-			if(error == 0)
+			if (error == 0)
 				cmd->filename_error = redir->filename;
 			redir = redir->next;
 			error = 1;

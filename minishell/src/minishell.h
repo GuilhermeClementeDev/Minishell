@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/29 22:27:25 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/06/02 18:34:53 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,11 @@ void		free_input_token_cmd(char *input, t_cmd *cmd_list);
 //utilits_main
 void		ft_build_shell(t_shell *shell, char **envp);
 void		ft_clean_shell(t_shell *shell);
-int			is_space_or_invalid(char *input);
+
+//utilits_main2
 t_token		*list_token(char *input, t_shell *shell);
 void		free_input_token_cmd(char *input, t_cmd *cmd_list);
+int			is_space_or_invalid(char *input);
 
 //verify_input.c
 int			verify_quotes(const char *str);
@@ -121,7 +123,7 @@ void		free_redirects(t_redirect *redirects);
 void		free_commands(t_cmd *cmds);
 
 //var_expansion.c
-void	expand_variables_in_token(t_token *tokens, t_shell *shell);
+void		expand_variables_in_token(t_token *tokens, t_shell *shell);
 
 //prints.c
 void		print_tokens(t_token **head);
@@ -146,6 +148,7 @@ void		ft_new_env_pwds(t_shell *shell);
 
 //utilits_builtins2.c
 int			ft_only_chr(char *str, char a);
+void		validate_path_helper(char **separated, char **path_helper);
 
 //utilits_export
 int			is_valid_export(char *str);
@@ -163,7 +166,7 @@ int			ft_echo(char **str);
 int			ft_pwd(void);
 int			ft_env(char **envp);
 int			ft_cd(t_shell *shell, char **str, char **envp);
-void		ft_exit(t_shell *shell , t_cmd *cmd);
+void		ft_exit(t_shell *shell, t_cmd *cmd);
 
 //builtins2
 int			ft_export(char **env, char **new_var, t_shell *shell);
@@ -180,7 +183,7 @@ int			apply_redirects_to_all(t_cmd *cmd_list);
 //redirects_utils.c
 void		change_cmd_fd(t_cmd *cmd, t_redirect *redir, int fd);
 int			open_fd_redir(t_redirect *redir);
-int	verify_fd_cmd(t_cmd *cmd, t_redirect *r, int fd);
+int			verify_fd_cmd(t_cmd *cmd, t_redirect *r, int fd);
 
 //heredoc.c
 void		process_heredocs(t_cmd *cmd_list);
@@ -197,7 +200,6 @@ void		ft_executer(t_shell *shell);
 void		ft_signals(void);
 void		ft_signals_child(int status, t_shell *shell);
 void		sigint_exec_handler(int sig);
-
 
 void		close_cmd_fds(t_cmd *cmd_list);
 

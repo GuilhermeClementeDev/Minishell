@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:36 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/28 15:55:57 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/06/02 18:14:06 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	token_and_parse(t_shell *shell)
 	free_token_list(shell->tokens);
 }
 
-void close_cmd_fds(t_cmd *cmd_list)
+void	close_cmd_fds(t_cmd *cmd_list)
 {
 	t_cmd	*cmd;
 
@@ -44,6 +44,22 @@ static int	should_add_to_history(char *str)
 	return (ft_not_only_spaces(str));
 }
 
+static void	handle_input_main(t_shell *shell)
+{
+	if (should_add_to_history(shell->input))
+		add_history(shell->input);
+	token_and_parse(shell);
+	process_heredocs(shell->cmds);
+	if (!prepare_execution(shell->cmds))
+	{
+		ft_clean_shell(shell);
+		return ;
+	}
+	ft_executer(shell);
+	close_cmd_fds(shell->cmds);
+	ft_clean_shell(shell);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	*shell;
@@ -56,23 +72,11 @@ int	main(int argc, char **argv, char **envp)
 	{
 		ft_signals();
 		shell->input = readline("minishell> ");
-		//shell->input = "> a echo algo aqui | cat a";
 		if (!shell->input)
 			ft_exit(shell, NULL);
 		if (is_space_or_invalid(shell->input))
 			continue ;
-		token_and_parse(shell);
-		if (should_add_to_history(shell->input))
-			add_history(shell->input);
-		process_heredocs(shell->cmds);
-		if (!prepare_execution(shell->cmds))
-		{
-			ft_clean_shell(shell);
-			continue;
-		}
-		ft_executer(shell);
-		close_cmd_fds(shell->cmds);
-		ft_clean_shell(shell);
+		handle_input_main(shell);
 	}
 	free_env(shell->env);
 	free(shell);
