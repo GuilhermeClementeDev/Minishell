@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 16:56:02 by guclemen          #+#    #+#             */
-/*   Updated: 2025/06/02 18:38:47 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/06/02 20:40:54 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	ft_echo(char **str)
 
 	i = 1;
 	flag = 0;
-	if (str[i] && ft_strncmp(str[i], "-n", 2) == 0 \
-	&& ft_only_chr(&str[i][1], 'n') == 0)
+	while (str[i] && str[i][0] == '-' && str[i][1] == 'n'
+		&& ft_only_chr(&str[i][1], 'n') == 0)
 	{
 		flag = 1;
 		i++;
