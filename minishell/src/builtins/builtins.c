@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 16:56:02 by guclemen          #+#    #+#             */
-/*   Updated: 2025/06/02 20:40:54 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/06/02 21:18:52 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	ft_exit(t_shell *shell, t_cmd *cmd)
 	if (str && cmd->args[2] && status != 2)
 	{
 		print_error("exit", NULL, "too many arguments");
-		shell->status = 1;
+		g_status = 1;
 		return ;
 	}
 	else if (str && status != 2)

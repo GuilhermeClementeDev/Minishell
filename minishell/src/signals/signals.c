@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 12:38:02 by guclemen          #+#    #+#             */
-/*   Updated: 2025/06/02 21:07:15 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/06/02 21:28:30 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	sigint_handler(int sig)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
+	g_status = 130;
 }
 
 void	sigint_exec_handler(int sig)
@@ -27,7 +28,7 @@ void	sigint_exec_handler(int sig)
 	write(1, "\n", 1);
 }
 
-void	ft_signals_child(int status, t_shell *shell)
+void	ft_signals_child(int status)
 {
 	int	sig;
 
@@ -37,15 +38,15 @@ void	ft_signals_child(int status, t_shell *shell)
 		if (sig == SIGQUIT)
 		{
 			write(2, "Quit (core dumped)\n", 19);
-			shell->status = 128 + sig;
+			g_status = 128 + sig;
 		}
 		if (sig == SIGINT)
-			shell->status = 128 + sig;
+			g_status = 128 + sig;
 	}
 	else if (WIFEXITED(status))
-		shell->status = WEXITSTATUS(status);
+		g_status = WEXITSTATUS(status);
 	else
-		shell->status = 1;
+		g_status = 1;
 }
 
 void	ft_signals(void)

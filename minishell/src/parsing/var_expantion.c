@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:55:53 by gda-conc          #+#    #+#             */
-/*   Updated: 2025/06/02 20:58:27 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/06/02 21:21:01 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_shell *shell)
 	if (input[*i + 1] == '?')
 	{
 		(*i) += 2;
-		value = ft_itoa(shell->status);
+		value = ft_itoa(g_status);
 		result = ft_join_gnl(result, value);
 		free(value);
 	}

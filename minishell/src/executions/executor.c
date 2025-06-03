@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:19:25 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/29 23:29:37 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/06/02 21:29:09 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,7 +222,7 @@ void	ft_executer(t_shell *shell)
 	{
 		if(!shell->cmds->next && is_builtin(cmd->args[0]) == 1)
 		{
-			shell->status = execute_builtin_parent(shell, cmd);
+			g_status = execute_builtin_parent(shell, cmd);
 			cmd = cmd->next;
 			continue ;
 		}
@@ -249,6 +249,6 @@ void	ft_executer(t_shell *shell)
 	}
 	signal(SIGINT, sigint_exec_handler);
 	while (wait(&status) > 0)
-		ft_signals_child(status, shell);
+		ft_signals_child(status);
 	// Espera todos os processos filhos terminarem
 }

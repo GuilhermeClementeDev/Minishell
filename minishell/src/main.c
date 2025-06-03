@@ -6,11 +6,13 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:36 by guclemen          #+#    #+#             */
-/*   Updated: 2025/06/02 18:14:06 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/06/02 21:14:54 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_status;
 
 void	token_and_parse(t_shell *shell)
 {
@@ -67,6 +69,7 @@ int	main(int argc, char **argv, char **envp)
 	shell = malloc(sizeof(t_shell));
 	(void)argc;
 	(void)argv;
+	g_status = 0;
 	ft_build_shell(shell, envp);
 	while (TRUE)
 	{
