@@ -38,6 +38,7 @@ SRCS = \
 	$(SRC_DIR)/$(BUILTIN_DIR)/builtins2.c \
 	$(SRC_DIR)/$(BUILTIN_DIR)/error.c \
 	$(SRC_DIR)/$(EXECUTION_DIR)/executor.c\
+	$(SRC_DIR)/$(EXECUTION_DIR)/executor_utils.c \
 	$(SRC_DIR)/$(SIGNAL_DIR)/signals.c\
 	$(SRC_DIR)/$(REDIRECT_DIR)/redirects.c \
 	$(SRC_DIR)/$(REDIRECT_DIR)/redirects_utils.c \

@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/06/02 21:29:29 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/06/02 21:56:59 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ void		ft_new_env_pwds(t_shell *shell);
 //utilits_builtins2.c
 int			ft_only_chr(char *str, char a);
 void		validate_path_helper(char **separated, char **path_helper);
+int			exit_status(char *str);
 
 //utilits_export
 int			is_valid_export(char *str);
@@ -204,7 +205,11 @@ void		sigint_exec_handler(int sig);
 
 void		close_cmd_fds(t_cmd *cmd_list);
 
+//execution utilitis
+char		*find_cmd_path(t_shell *shell, t_cmd *cmd);
+int			is_builtin(char *cmd);
+
 // expation utilitis
-int	handle_quotes(char c, int *in_single, int *in_double);
+int			handle_quotes(char c, int *in_single, int *in_double);
 
 #endif

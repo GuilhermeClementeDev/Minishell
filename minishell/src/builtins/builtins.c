@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 16:56:02 by guclemen          #+#    #+#             */
-/*   Updated: 2025/06/02 21:18:52 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/06/02 21:38:42 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,38 +95,22 @@ int	ft_cd(t_shell *shell, char **str, char **envp)
 
 void	ft_exit(t_shell *shell, t_cmd *cmd)
 {
-	int		status = 0;
-	char	*str = NULL;
-	int		i = 0;
+	char	*str;
+	int		status;
 
-	ft_putstr_fd("exit\n", 1);
+	str = NULL;
+	status = 0;
 	if (cmd && cmd->args[1])
 		str = cmd->args[1];
-
+	ft_putstr_fd("exit\n", 1);
 	if (str)
-	{
-		if (str[0] == '-' || str[0] == '+')
-			i++;
-		while (str[i] && ft_isdigit(str[i]))
-			i++;
-		if (str[i] == '\0')
-			status = ft_atoi(str);
-		else
-		{
-			print_error("exit", str, "numeric argument required");
-			status = 2;
-		}
-	}
-
+		status = exit_status(str);
 	if (str && cmd->args[2] && status != 2)
 	{
 		print_error("exit", NULL, "too many arguments");
 		g_status = 1;
 		return ;
 	}
-	else if (str && status != 2)
-		status = (unsigned char)ft_atoi(str);
-
 	close_cmd_fds(shell->cmds);
 	ft_clean_shell(shell);
 	free_env(shell->env);

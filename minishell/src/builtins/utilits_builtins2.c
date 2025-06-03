@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 16:28:31 by guclemen          #+#    #+#             */
-/*   Updated: 2025/06/02 20:50:20 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/06/02 21:44:18 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,19 @@ ft_strlen(separated[i])) == 0 && last > 0)
 		i++;
 	}
 	path_helper[last] = NULL;
+}
+
+int	exit_status(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[0] == '-' || str[0] == '+')
+		i++;
+	while (str[i] && ft_isdigit(str[i]))
+		i++;
+	if (str[i] == '\0')
+		return ((unsigned char)ft_atoi(str));
+	print_error("exit", str, "numeric argument required");
+	return (2);
 }
