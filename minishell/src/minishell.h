@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/06/02 18:34:53 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/06/02 20:59:05 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,5 +202,8 @@ void		ft_signals_child(int status, t_shell *shell);
 void		sigint_exec_handler(int sig);
 
 void		close_cmd_fds(t_cmd *cmd_list);
+
+// expation utilitis
+int	handle_quotes(char c, int *in_single, int *in_double);
 
 #endif

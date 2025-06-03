@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:55:53 by gda-conc          #+#    #+#             */
-/*   Updated: 2025/05/27 15:04:23 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/06/02 20:58:27 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ static char	*get_var_name(char *str, int *i)
 	}
 	return (ft_substr(str, begin, size));
 }
-static char	*ft_domain_expansion(char *input, int *i, char *result, t_shell *shell)
+
+static char	*ft_domain_expansion(char *input, int *i, char *result, \
+t_shell *shell)
 {
 	char	*name;
 	char	*value;
@@ -53,6 +55,7 @@ static char	*ft_domain_expansion(char *input, int *i, char *result, t_shell *she
 	}
 	return (result);
 }
+
 static char	*ft_add_one(char *input, int *i, char *result)
 {
 	char	tmp[2];
@@ -77,10 +80,8 @@ static char	*expand_variables(char *input, t_shell *shell)
 	result = ft_strdup("");
 	while (input[i])
 	{
-		if (input[i] == '\'' && !in_double)
-			in_single = !in_single, i++;
-		else if (input[i] == '\"' && !in_single)
-			in_double = !in_double, i++;
+		if (handle_quotes(input[i], &in_single, &in_double))
+			i++;
 		else if (input[i] == '$' && !in_single && input[i + 1])
 			result = ft_domain_expansion(input, &i, result, shell);
 		else

@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:06:49 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/28 14:58:28 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/06/02 20:48:56 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static char	**ft_sort_env(char **env)
 		while (sorted_env[k])
 		{
 			if (ft_strncmp(sorted_env[i], sorted_env[k], \
-				ft_strlen(sorted_env[i])) > 0)
+ft_strlen(sorted_env[i])) > 0)
 			{
 				tmp = sorted_env[i];
 				sorted_env[i] = sorted_env[k];

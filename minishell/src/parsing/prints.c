@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prints.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 15:00:25 by gda-conc          #+#    #+#             */
-/*   Updated: 2025/05/14 15:03:14 by gda-conc         ###   ########.fr       */
+/*   Updated: 2025/06/02 20:55:12 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	print_cmds(t_cmd **cmd)
 		while (redir)
 		{
 			printf("  redirect: %s %s\n", redir_type_to_str(redir->type), \
-			redir->filename);
+redir->filename);
 			redir = redir->next;
 		}
 		cmds = cmds->next;
