@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utilits_main2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
+/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 17:57:21 by guclemen          #+#    #+#             */
-/*   Updated: 2025/06/02 17:57:55 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/06/04 02:39:52 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ t_token	*list_token(char *input, t_shell *shell)
 
 	token_list = lexer(input);
 	expand_variables_in_token(token_list, shell);
-	clean_tokens(token_list);
 	return (token_list);
 }
 
