@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utilits_builtins2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 16:28:31 by guclemen          #+#    #+#             */
-/*   Updated: 2025/06/04 00:13:20 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/06/04 10:28:08 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ void	validate_path_helper(char **separated, char **path_helper)
 	while (separated[i])
 	{
 		if (ft_strncmp(separated[i], "..", \
-ft_strlen(separated[i])) == 0 && last > 0)
+3) == 0 && last > 0)
 			free(path_helper[--last]);
-		else if (ft_strncmp(separated[i], ".", ft_strlen(separated[i])) != 0 \
-	&& ft_strncmp(separated[i], "", ft_strlen(separated[i])) != 0)
+		else if (ft_strncmp(separated[i], ".", 2) != 0 \
+	&& ft_strlen(separated[i]) != 0)
 			path_helper[last++] = ft_strdup(separated[i]);
 		i++;
 	}
