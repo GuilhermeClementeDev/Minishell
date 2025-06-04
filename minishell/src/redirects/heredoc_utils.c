@@ -3,20 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 15:31:49 by bieldojt          #+#    #+#             */
-/*   Updated: 2025/05/21 16:00:10 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/06/02 18:18:49 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	open_heredoc_file(char **filename)
+static int	open_heredoc_file(char **filename, int *count_heredocs)
 {
-	*filename = ft_strdup("/tmp/minishell_heredoc_tmp");
+	char	*tmp_count;
+	char	*tmp_filename;
+
+	tmp_count = ft_itoa(*count_heredocs);
+	tmp_filename = ft_strdup("/tmp/minishell_heredoc_tmp");
+	*filename = ft_strjoin(tmp_filename, tmp_count);
 	if (!*filename)
+	{
+		free(tmp_count);
+		free(tmp_filename);
 		return (0);
+	}
+	free(tmp_count);
+	free(tmp_filename);
+	(*count_heredocs)++;
 	return (open(*filename, O_CREAT | O_WRONLY | O_TRUNC, 0644));
 }
 
@@ -27,13 +39,13 @@ static int	write_line_to_file(int fd, char *line)
 	return (1);
 }
 
-char	*create_heredoc_file(char *delimiter)
+char	*create_heredoc_file(char *delimiter, int *count_heredocs)
 {
 	char	*line;
 	char	*filename;
 	int		fd;
 
-	fd = open_heredoc_file(&filename);
+	fd = open_heredoc_file(&filename, count_heredocs);
 	if (fd < 0)
 	{
 		perror("open heredoc tmp");

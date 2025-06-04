@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirects.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:39:19 by bieldojt          #+#    #+#             */
-/*   Updated: 2025/05/21 15:34:54 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/06/02 18:19:32 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,20 @@ int	apply_redirects_to_fds(t_cmd *cmd)
 	error = 0;
 	cmd->fd_in = STDIN_FILENO;
 	cmd->fd_out = STDOUT_FILENO;
+	cmd->filename_error = NULL;
 	redir = cmd->redirects;
 	while (redir)
 	{
-		fd = 0;
-		if (open_fd_redir(redir, &fd) == -1)
+		fd = open_fd_redir(redir);
+		if (fd == -1)
 		{
+			if (error == 0)
+				cmd->filename_error = redir->filename;
 			redir = redir->next;
+			error = 1;
 			continue ;
 		}
-		verify_fd_cmd (cmd, redir, fd, &error);
+		verify_fd_cmd(cmd, redir, fd);
 		redir = redir->next;
 	}
 	cmd->redirect_error = error;
@@ -56,15 +60,7 @@ int	apply_redirects_to_all(t_cmd *cmd_list)
 
 int	prepare_execution(t_cmd *cmd_list)
 {
-	if (apply_redirects_to_all(cmd_list) == -1)
-	{
-		ft_putstr_fd("Error: failed to apply redirects\n", 2);
-		return (0);
-	}
-	if (setup_pipes(cmd_list) == -1)
-	{
-		ft_putstr_fd("Error: failed to create pipes\n", 2);
-		return (0);
-	}
+	apply_redirects_to_all(cmd_list);
+	setup_pipes(cmd_list);
 	return (1);
 }

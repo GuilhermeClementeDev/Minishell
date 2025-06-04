@@ -6,31 +6,35 @@
 /*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:36 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/21 16:13:45 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/06/04 02:42:04 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	g_status;
+
 void	token_and_parse(t_shell *shell)
 {
-	shell->tokens = list_token(shell->input);
+	shell->tokens = list_token(shell->input, shell);
 	shell->cmds = parse_tokens(shell->tokens);
 	print_cmds(&shell->cmds);
 	free_token_list(shell->tokens);
 }
 
-int	execution(t_shell *shell)
+void	close_cmd_fds(t_cmd *cmd_list)
 {
-	process_heredocs(shell->cmds);
-	if (!prepare_execution(shell->cmds))
+	t_cmd	*cmd;
+
+	cmd = cmd_list;
+	while (cmd)
 	{
-		ft_clean_shell(shell);
-		return (0);
+		if (cmd->fd_in != STDIN_FILENO)
+			close(cmd->fd_in);
+		if (cmd->fd_out != STDOUT_FILENO)
+			close(cmd->fd_out);
+		cmd = cmd->next;
 	}
-	execute_pipeline(shell->cmds, &shell->env);
-	close_cmd_fds(shell->cmds);
-	return (1);
 }
 
 static int	should_add_to_history(char *str)
@@ -42,6 +46,22 @@ static int	should_add_to_history(char *str)
 	return (ft_not_only_spaces(str));
 }
 
+static void	handle_input_main(t_shell *shell)
+{
+	if (should_add_to_history(shell->input))
+		add_history(shell->input);
+	token_and_parse(shell);
+	process_heredocs(shell->cmds);
+	if (!prepare_execution(shell->cmds))
+	{
+		ft_clean_shell(shell);
+		return ;
+	}
+	ft_executer(shell);
+	close_cmd_fds(shell->cmds);
+	ft_clean_shell(shell);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	*shell;
@@ -49,20 +69,17 @@ int	main(int argc, char **argv, char **envp)
 	shell = malloc(sizeof(t_shell));
 	(void)argc;
 	(void)argv;
+	g_status = 0;
 	ft_build_shell(shell, envp);
 	while (TRUE)
 	{
+		ft_signals();
 		shell->input = readline("minishell> ");
 		if (!shell->input)
-			break ;
+			ft_exit(shell, NULL);
 		if (is_space_or_invalid(shell->input))
 			continue ;
-		token_and_parse(shell);
-		if (!execution(shell))
-			continue ;
-		if (should_add_to_history(shell->input))
-			add_history(shell->input);
-		ft_clean_shell(shell);
+		handle_input_main(shell);
 	}
 	free_env(shell->env);
 	free(shell);

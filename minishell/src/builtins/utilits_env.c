@@ -6,7 +6,7 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:09:42 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/15 18:19:32 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:07:20 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*get_env_value(char **envp, char *key)
 	int	j;
 
 	i = 0;
+	if (!envp)
+		return (NULL);
 	while (envp[i])
 	{
 		j = 0;
@@ -60,7 +62,7 @@ void	copy_env_skip(char **old_env, char **new_env, char *skip, char *new_var)
 	k = 0;
 	while (old_env[i])
 	{
-		if (skip && ft_strnstr(old_env[i], skip, ft_strlen(skip)))
+		if (skip && is_env_skip_match(old_env[i], skip))
 		{
 			if (new_var)
 				new_env[k++] = ft_strdup(new_var);
@@ -75,18 +77,30 @@ void	copy_env_skip(char **old_env, char **new_env, char *skip, char *new_var)
 		new_env[k] = ft_strdup(new_var);
 }
 
-void	ft_new_env_pwds(char **envp)
+void	ft_new_env_pwds(t_shell *shell)
 {
-	char	*pwd;
 	char	cwd[PATH_MAX];
 	char	*old_pwd;
+	int		old_pwd_exists;
+	int		pwd_exists;
 
-	old_pwd = get_env_value(envp, "PWD");
-	old_pwd = ft_strjoin("OLDPWD=", old_pwd);
-	ft_change_value(envp, old_pwd);
+	old_pwd_exists = get_env_variable(shell->env, "OLDPWD");
+	pwd_exists = get_env_variable(shell->env, "PWD");
+	old_pwd = get_env_value(shell->env, "PWD");
+	if (!old_pwd && !old_pwd_exists && !pwd_exists)
+		return ;
+	else if (!old_pwd)
+		old_pwd = ft_strjoin("OLDPWD=", "");
+	else
+		old_pwd = ft_strjoin("OLDPWD=", old_pwd);
+	if (old_pwd_exists)
+		ft_change_value(shell->env, old_pwd);
 	free(old_pwd);
-	getcwd(cwd, sizeof(cwd));
-	pwd = ft_strjoin("PWD=", cwd);
-	ft_change_value(envp, pwd);
-	free(pwd);
+	if (pwd_exists)
+	{
+		getcwd(cwd, sizeof(cwd));
+		old_pwd = ft_strjoin("PWD=", cwd);
+		ft_change_value(shell->env, old_pwd);
+	}
+	free(old_pwd);
 }

@@ -6,7 +6,7 @@
 /*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/21 16:14:08 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/06/04 00:56:10 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # include <fcntl.h>
 # include <linux/limits.h>
 # include <sys/wait.h>
+# include <signal.h>
+# include <sys/stat.h>
+# include <errno.h> //para testar a variavel global
 
 # define TRUE 1
 # define FALSE 0
@@ -31,6 +34,8 @@
 # define T_RED_OUT 4
 # define T_APPEND 5
 # define T_HEREDOC 6
+
+extern int	g_status;
 
 typedef struct s_token
 {
@@ -53,6 +58,7 @@ typedef struct s_cmd
 	int				fd_in;
 	int				fd_out;
 	int				redirect_error;
+	char			*filename_error;
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -66,14 +72,17 @@ typedef struct s_shell
 
 //main
 int			ft_not_only_spaces(char *str);
+void		close_cmd_fds(t_cmd *cmd_list);
 void		free_input_token_cmd(char *input, t_cmd *cmd_list);
 
 //utilits_main
 void		ft_build_shell(t_shell *shell, char **envp);
 void		ft_clean_shell(t_shell *shell);
-int			is_space_or_invalid(char *input);
-t_token		*list_token(char *input);
+
+//utilits_main2
+t_token		*list_token(char *input, t_shell *shell);
 void		free_input_token_cmd(char *input, t_cmd *cmd_list);
+int			is_space_or_invalid(char *input);
 
 //verify_input.c
 int			verify_quotes(const char *str);
@@ -115,18 +124,7 @@ void		free_redirects(t_redirect *redirects);
 void		free_commands(t_cmd *cmds);
 
 //var_expansion.c
-void		expand_variables_in_token(t_token *token);
-char		*expand_variable(char *input, int *index);
-
-//var_expansion_utils.c
-int			quoted_part(char *input, int *i, char **expanded_str);
-int			var_expansion(char *input, int *i, char **expanded_str);
-int			handle_normal_char(char *input, int *i, char **expand_str);
-char		*initialize_expanded_str(void);
-
-//var_expansion_utils2.c
-void		expand_variables_in_str(char **str, char *input);
-int			quotes_or_expansion(char **exp_str, char *input, int *i);
+void		expand_variables_in_token(t_token *tokens, t_shell *shell);
 
 //prints.c
 void		print_tokens(t_token **head);
@@ -137,6 +135,9 @@ const char	*token_type_to_str(int type);
 const char	*redir_type_to_str(int type);
 //utilits
 int			ft_not_only_spaces(char *str);
+int			is_env_skip_match(char *env_var, char *skip);
+int			get_env_variable(char **env, char *key);
+char		*ft_full_path(char *current_pwd, char *goal);
 
 //utilits_env
 char		*get_env_value(char **envp, char *key);
@@ -144,27 +145,34 @@ int			count_env(char **env);
 char		**alloc_env(int entry_count);
 void		copy_env_skip(char **old_env, char **new_env, \
 char *skip, char *new_var);
-void		ft_new_env_pwds(char **envp);
+void		ft_new_env_pwds(t_shell *shell);
+
+//utilits_builtins2.c
+int			ft_only_chr(char *str, char a);
+void		validate_path_helper(char **separated, char **path_helper);
+int			exit_status(char *str);
 
 //utilits_export
 int			is_valid_export(char *str);
-char		*ft_no_spaces(char *str);
 int			ft_change_value(char **env, char *new_var);
+char		**single_var(char *var);
+void		ft_print_export(char **env);
 
 //error
 void		ft_error(char *str, int n);
 void		free_env(char **env);
+void		print_error(char *cmd, char *str, char *msg);
 
 //builtins1
-void		ft_echo(char **str);
-void		ft_pwd(void);
-void		ft_env(char **envp);
-void		ft_cd(char **str, char **envp);
-void		ft_exit(char **args);
+int			ft_echo(char **str);
+int			ft_pwd(void);
+int			ft_env(char **envp);
+int			ft_cd(t_shell *shell, char **str, char **envp);
+void		ft_exit(t_shell *shell, t_cmd *cmd);
 
 //builtins2
-char		**ft_export(char **env, char *new_var);
-char		**ft_unset(char **env, char *to_remove);
+int			ft_export(char **env, char **new_var, t_shell *shell);
+int			ft_unset(char **env, char **to_remove, t_shell *shell);
 
 //pipes.c
 int			setup_pipes(t_cmd *cmd_list);
@@ -176,17 +184,35 @@ int			apply_redirects_to_all(t_cmd *cmd_list);
 
 //redirects_utils.c
 void		change_cmd_fd(t_cmd *cmd, t_redirect *redir, int fd);
-int			open_fd_redir(t_redirect *redir, int *fd);
-void		verify_fd_cmd(t_cmd *cmd, t_redirect *r, int fd, int *error);
+int			open_fd_redir(t_redirect *redir);
+int			verify_fd_cmd(t_cmd *cmd, t_redirect *r, int fd);
 
 //heredoc.c
 void		process_heredocs(t_cmd *cmd_list);
 
 //heredoc_utils.c
-char		*create_heredoc_file(char *delimiter);
+char		*create_heredoc_file(char *delimiter, int *count_heredocs);
 
 //executor
-void		execute_pipeline(t_cmd *cmd_list, char ***envp);
+//void		execute_pipeline(t_cmd *cmd_list, char ***envp);
+//void		close_cmd_fds(t_cmd *cmd_list);
+void		ft_executer(t_shell *shell);
+
+// signals
+void		ft_signals(void);
+void		ft_signals_child(int status);
+void		sigint_exec_handler(int sig);
+
 void		close_cmd_fds(t_cmd *cmd_list);
+
+//execution utilitis
+char		*find_cmd_path(t_shell *shell, t_cmd *cmd);
+int			is_builtin(char *cmd);
+void		free_and_exit(t_shell *shell, int exit_code);
+void		check_error_and_dup(t_shell *shell, t_cmd *cmd);
+int			check_exec_path(const char *path);
+
+// expation utilitis
+int			handle_quotes(char c, int *in_single, int *in_double);
 
 #endif

@@ -179,7 +179,7 @@ static void exec_external_cmd(t_cmd *cmd, char **envp)
 // Executa um comando no filho
 static void execute_single_command(t_cmd *cmd, char ***envp)
 {
-    if (cmd->redirect_error)
+    if (!cmd->redirect_error)
         exit(1); // Se houver erro no redirecionamento, sai
 
     // Redireciona a entrada e saída se necessário

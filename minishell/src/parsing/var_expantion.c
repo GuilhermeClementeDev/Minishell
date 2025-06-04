@@ -3,65 +3,107 @@
 /*                                                        :::      ::::::::   */
 /*   var_expantion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:55:53 by gda-conc          #+#    #+#             */
-/*   Updated: 2025/05/15 18:39:21 by bieldojt         ###   ########.fr       */
+/*   Updated: 2025/06/04 10:16:06 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	*get_env_var_value(char *var)
+static char	*get_var_name(char *str, int *i)
 {
+	int	begin;
+	int	size;
+
+	size = 0;
+	begin = *i;
+	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
+	{
+		(*i)++;
+		size++;
+	}
+	return (ft_substr(str, begin, size));
+}
+
+static char	*ft_domain_expansion(char *input, int *i, char *result, \
+t_shell *shell)
+{
+	char	*name;
 	char	*value;
 
-	value = getenv(var);
-	if (!value)
-		return (ft_strdup(""));
-	return (ft_strdup(value));
-}
-
-char	*expand_variable(char *input, int *index)
-{
-	int		start;
-	char	*var_name;
-	char	*var_value;
-
-	start = *index;
-	(*index)++;
-	while (input[*index] && (isalnum(input[*index]) || input[*index] == '_'))
-		(*index)++;
-	var_name = ft_substr(input, start + 1, *index - start - 1);
-	var_value = get_env_var_value(var_name);
-	free(var_name);
-	return (var_value);
-}
-
-void	handle_expansion(t_token *token)
-{
-	char	*expanded_value;
-
-	expanded_value = NULL;
-	if (token->type == T_WORD)
+	if (input[*i + 1] == '?')
 	{
-		if (!inside_quotes(token->value, 0))
-		{
-			expand_variables_in_str(&expanded_value, token->value);
-			free(token->value);
-			token->value = expanded_value;
-		}
+		(*i) += 2;
+		value = ft_itoa(g_status);
+		result = ft_join_gnl(result, value);
+		free(value);
 	}
+	else
+	{
+		(*i)++;
+		name = get_var_name(input, i);
+		if (!name)
+			return (result);
+		value = ft_strdup(get_env_value(shell->env, name));
+		free(name);
+		if (!value)
+			return (result);
+		result = ft_join_gnl(result, value);
+		free(value);
+	}
+	return (result);
 }
 
-void	expand_variables_in_token(t_token *token)
+static char	*ft_add_one(char *input, int *i, char *result)
 {
-	t_token	*current;
+	char	tmp[2];
 
-	current = token;
-	while (current)
+	tmp[0] = input[*i];
+	tmp[1] = '\0';
+	result = ft_join_gnl(result, tmp);
+	(*i)++;
+	return (result);
+}
+
+static char	*expand_variables(char *input, t_shell *shell)
+{
+	int		i;
+	int		in_single;
+	int		in_double;
+	char	*result;
+
+	i = 0;
+	in_single = 0;
+	in_double = 0;
+	result = ft_strdup("");
+	while (input[i])
 	{
-		handle_expansion(current);
-		current = current->next;
+		if (handle_quotes(input[i], &in_single, &in_double))
+			i++;
+		else if (input[i] == '$' && !in_single && input[i + 1])
+			result = ft_domain_expansion(input, &i, result, shell);
+		else
+			result = ft_add_one(input, &i, result);
+	}
+	return (result);
+}
+
+void	expand_variables_in_token(t_token *tokens, t_shell *shell)
+{
+	t_token	*tmp;
+	char	*expanded;
+
+	tmp = tokens;
+	while (tmp)
+	{
+		if (tmp->type == T_WORD)
+		{
+			expanded = expand_variables(tmp->value, shell);
+			free(tmp->value);
+			tmp->value = expanded;
+		}
+		tmp = tmp->next;
 	}
 }

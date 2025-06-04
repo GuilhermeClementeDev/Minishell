@@ -6,47 +6,64 @@
 /*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:17:20 by guclemen          #+#    #+#             */
-/*   Updated: 2025/05/15 23:05:14 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:55:24 by guclemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	**ft_export(char **env, char *new_var)
+int	ft_export(char **env, char **new_var, t_shell *shell)
 {
-	int		count;
 	char	**new_env;
-	char	*no_spaces;
+	char	**tmp;
+	int		i;
+	int		status;
 
-	if (!is_valid_export(new_var))
-		return (env);
-	if (ft_change_value(env, new_var))
-		return (env);
-	count = count_env(env) + 1;
-	new_env = alloc_env(count);
-	if (!new_env)
-		return (env);
-	no_spaces = ft_no_spaces(new_var);
-	copy_env_skip(env, new_env, NULL, no_spaces);
-	free(no_spaces);
-	free_env(env);
-	return (new_env);
+	status = 0;
+	i = 1;
+	new_env = env;
+	if (!new_var[i])
+		ft_print_export(env);
+	while (new_var[i])
+	{
+		if (!is_valid_export(new_var[i]))
+			status = 1;
+		else if (!ft_change_value(new_env, new_var[i]))
+		{
+			tmp = alloc_env(count_env(new_env) + 1);
+			copy_env_skip(new_env, tmp, NULL, new_var[i]);
+			free_env(new_env);
+			new_env = tmp;
+		}
+		i++;
+	}
+	shell->env = new_env;
+	return (status);
 }
 
-char	**ft_unset(char **env, char *to_remove)
+int	ft_unset(char **env, char **to_remove, t_shell *shell)
 {
-	int		count;
 	char	**new_env;
+	char	**tmp;
+	int		i;
+	int		status;
 
-	if (!get_env_value(env, to_remove))
-		return (env);
-	count = count_env(env) - 1;
-	new_env = alloc_env(count);
-	if (!new_env)
-		return (env);
-	copy_env_skip(env, new_env, to_remove, NULL);
-	free_env(env);
-	return (new_env);
+	i = 1;
+	status = 0;
+	new_env = env;
+	while (to_remove[i])
+	{
+		if (get_env_variable(new_env, to_remove[i]))
+		{
+			tmp = alloc_env(count_env(new_env) - 1);
+			copy_env_skip(new_env, tmp, to_remove[i], NULL);
+			free_env(new_env);
+			new_env = tmp;
+		}
+		i++;
+	}
+	shell->env = new_env;
+	return (status);
 }
 /*
 int main(void) {
