@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guclemen <guclemen@student.42.rio>         +#+  +:+       +#+        */
+/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:48 by guclemen          #+#    #+#             */
-/*   Updated: 2025/06/02 21:56:59 by guclemen         ###   ########.fr       */
+/*   Updated: 2025/06/04 00:56:10 by bieldojt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,9 @@ void		close_cmd_fds(t_cmd *cmd_list);
 //execution utilitis
 char		*find_cmd_path(t_shell *shell, t_cmd *cmd);
 int			is_builtin(char *cmd);
+void		free_and_exit(t_shell *shell, int exit_code);
+void		check_error_and_dup(t_shell *shell, t_cmd *cmd);
+int			check_exec_path(const char *path);
 
 // expation utilitis
 int			handle_quotes(char c, int *in_single, int *in_double);
