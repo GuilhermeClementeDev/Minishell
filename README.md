@@ -1,39 +1,41 @@
 # 🐚 Minishell
 
-Minishell é um projeto da 42 School cujo objetivo é recriar um shell simplificado em C, com suporte a múltiplos comandos, redirecionamentos, pipes, variáveis de ambiente e tratamento de sinais, seguindo o comportamento do `bash`.
+**Minishell** is a project from 42 School that aims to recreate a simplified shell in C. It supports multiple commands, redirections, pipes, environment variable expansion, and signal handling — following the behavior of `bash`.
 
 ---
 
-## 📜 Regras do Projeto
+## 📜 Project Rules
 
-- Trabalhar em C e seguir as normas do [Norminette](https://github.com/42School/norminette).
-- Sem uso de `system()` ou `execvp()` — toda a lógica deve ser implementada.
-- Implementar comandos internos (builtins) como `cd`, `echo`, `pwd`, `exit`, etc.
-- Suporte a redirecionamentos (`>`, `<`, `>>`, `<<`) e pipes (`|`).
-- Expansão de variáveis de ambiente (`$USER`, `$?`, etc.).
-- Tratamento adequado dos sinais `SIGINT` (Ctrl+C) e `SIGQUIT` (Ctrl+\).
+- Must be written in C and follow the [Norminette](https://github.com/42School/norminette) style guide.
+- Do not use `system()` or `execvp()` — all logic must be implemented manually.
+- Implement built-in commands such as `cd`, `echo`, `pwd`, `exit`, etc.
+- Support for redirections (`>`, `<`, `>>`, `<<`) and pipes (`|`).
+- Expansion of environment variables (`$USER`, `$?`, etc.).
+- Proper handling of signals `SIGINT` (Ctrl+C) and `SIGQUIT` (Ctrl+\).
 
 ---
 
-## ⚙️ Como usar
+## ⚙️ How to Use
 
-### 🔧 Compilar
+### 🔧 Compile
 
 ```bash
 make
 ```
 
-### ▶️ Executar
+### ▶️ Run
 
 ```bash
 ./minishell
 ```
-(Para rodar com o arquivo de supressão)
+
+(To run with the suppression file:)
+
 ```bash
 make run
 ```
 
-Você verá um prompt onde poderá digitar comandos como:
+You will see an interactive prompt where you can enter commands such as:
 
 ```bash
 echo hello | grep h > output.txt
@@ -42,14 +44,14 @@ cat < output.txt
 
 ---
 
-## ✅ Funcionalidades implementadas
+## ✅ Features Implemented
 
-- ✅ Prompt interativo com `readline`
-- ✅ Execução de comandos com argumentos
+- ✅ Interactive prompt using `readline`
+- ✅ Execution of commands with arguments
 - ✅ Pipes (`|`)
-- ✅ Redirecionamentos (`>`, `>>`, `<`, `<<`)
-- ✅ Variáveis de ambiente (`$USER`, `$?`, etc.)
-- ✅ Builtins:
+- ✅ Redirections (`>`, `>>`, `<`, `<<`)
+- ✅ Environment variable expansion (`$USER`, `$?`, etc.)
+- ✅ Built-in commands:
   - `echo`
   - `cd`
   - `pwd`
@@ -57,17 +59,17 @@ cat < output.txt
   - `env`
   - `export`
   - `unset`
-- ✅ Tratamento de sinais (`Ctrl+C`, `Ctrl+\`)
-- ✅ Status de saída (`$?`)
-- ✅ Parsing com suporte a aspas simples e duplas
+- ✅ Signal handling (`Ctrl+C`, `Ctrl+\`)
+- ✅ Exit status (`$?`)
+- ✅ Parsing with support for single and double quotes
 
 ---
 
-## 🛠️ Dependências
+## 🛠️ Dependencies
 
-- Biblioteca `readline` (necessária para o prompt com histórico)
+- `readline` library (required for prompt and history functionality)
 
-Instale no Linux com:
+To install on Linux:
 
 ```bash
 sudo apt-get install libreadline-dev
@@ -75,22 +77,22 @@ sudo apt-get install libreadline-dev
 
 ---
 
-## 🧠 Estrutura Geral
+## 🧠 Execution Flow
 
-A execução segue essas etapas:
+The shell follows these main steps:
 
-1. **Leitura da linha de comando** (`readline`)
-2. **Tokenização** (quebra do input em pedaços)
-3. **Parsing** (estruturação dos comandos e redirecionamentos)
-4. **Expansão de variáveis** (`$VAR`, `$?`)
-5. **Execução**:
-   - Comandos externos via `execve`
-   - Builtins tratados internamente
-   - Redirecionamentos e pipes com uso de `dup2`, `pipe`, `fork`
+1. **Read** the command line using `readline`
+2. **Tokenize** the input into manageable pieces
+3. **Parse** the tokens into structured commands and redirections
+4. **Expand** environment variables (`$VAR`, `$?`)
+5. **Execute**:
+   - External commands using `execve`
+   - Built-in commands handled internally
+   - Redirections and pipes managed with `dup2`, `pipe`, `fork`, etc.
 
 ---
 
-## 🧪 Exemplos
+## 🧪 Examples
 
 ```bash
 echo "Hello, $USER"
@@ -103,22 +105,22 @@ ls | grep minishell > result.txt
 
 ---
 
-## 👥 Autores
+## 👥 Authors
 
 - [guclemen](https://github.com/GuilhermeClementeDev)
 - [gda-conc](https://github.com/BieldoJT)
 
 ---
 
-## 📁 Observações
+## 📁 Notes
 
-Este projeto foi desenvolvido como parte do currículo da [42 School](https://42.fr/), com o objetivo de aprofundar os conhecimentos em:
+This project was developed as part of the [42 School](https://42.fr/) curriculum, aiming to deepen understanding in:
 
-- Processos (`fork`, `execve`, `waitpid`)
-- Manipulação de arquivos e FDs (`open`, `dup2`, etc)
-- Parsing e análise léxica
-- Redirecionamentos e heredocs
-- Sinais (`SIGINT`, `SIGQUIT`)
-- Estruturação e modularização em C
+- Processes (`fork`, `execve`, `waitpid`)
+- File and FD manipulation (`open`, `dup2`, etc.)
+- Input parsing and lexical analysis
+- Redirections and heredocs
+- Signal handling (`SIGINT`, `SIGQUIT`)
+- Clean and modular C architecture
 
 ---
