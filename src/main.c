@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bieldojt <bieldojt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gda-conc <gda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:02:36 by guclemen          #+#    #+#             */
-/*   Updated: 2025/06/04 02:42:04 by bieldojt         ###   ########.fr       */
+/*   Updated: 2026/01/08 11:33:44 by gda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	token_and_parse(t_shell *shell)
 {
 	shell->tokens = list_token(shell->input, shell);
 	shell->cmds = parse_tokens(shell->tokens);
-	print_cmds(&shell->cmds);
+	//print_cmds(&shell->cmds);
 	free_token_list(shell->tokens);
 }
 
